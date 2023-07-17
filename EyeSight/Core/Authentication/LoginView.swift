@@ -12,7 +12,7 @@ struct LoginView: View {
     @State private var password = ""
     @EnvironmentObject var viewModel: AuthService
     var body: some View {
-        NavigationStack {
+        NavigationView {
             VStack {
                 TextField("Email", text: $email)
                     .autocapitalization(.none)

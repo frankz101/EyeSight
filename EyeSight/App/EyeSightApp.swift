@@ -20,11 +20,11 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct EyeSightApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    @StateObject var viewModel = AuthService()
+    @StateObject var authViewModel = AuthService()
     var body: some Scene {
         WindowGroup {
                     HomeView()
-                        .environmentObject(viewModel)
+                        .environmentObject(authViewModel)
                 }
     }
 }
