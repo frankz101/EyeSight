@@ -13,8 +13,10 @@ import FirebaseStorage
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 import FirebaseAuth
+import CoreLocation
 
 class ViewController: UIViewController {
+    let locationManager = LocationManager()
     //MARK:- Vars
     var captureSession : AVCaptureSession!
     var onImageCaptured: ((UIImage) -> Void)?
@@ -196,61 +198,89 @@ class ViewController: UIViewController {
         }
         
         let uid = user.uid
-        
-        // Fetch the user's full name from the Firestore document
         let db = Firestore.firestore()
-        db.collection("users").document(uid).getDocument { (document, error) in
-            guard let document = document, document.exists, let data = document.data(), let fullName = data["fullName"] as? String else {
-                print("Error fetching user data or user document does not exist")
-                return
-            }
-            
-            // Convert the UIImage to Data
-            guard let imageData = uiImage.jpegData(compressionQuality: 0.8) else { return }
-            
-            // Create a storage reference
-            let storage = Storage.storage()
-            let storageRef = storage.reference().child("images/\(UUID().uuidString).jpg")
-            
-            // Upload the data
-            let uploadMetadata = StorageMetadata()
-            uploadMetadata.contentType = "image/jpeg"
-            
-            storageRef.putData(imageData, metadata: uploadMetadata) { metadata, error in
-                guard error == nil else {
-                    // handle error
+
+        // Fetch the user's full name from Firestore
+        let docRef = db.collection("users").document(uid)
+        docRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                let data = document.data()
+                let fullName = data?["fullName"] as? String ?? "Unknown User"
+
+                // Fetch the user's location
+                guard let currentLocation = self.locationManager.currentLocation else {
+                    print("Could not fetch user's current location")
                     return
                 }
-                storageRef.downloadURL { url, error in
-                    guard let downloadURL = url else {
-                        // handle error
+
+                // Convert coordinates to place names
+                let geocoder = CLGeocoder()
+                geocoder.reverseGeocodeLocation(currentLocation) { (placemarks, error) in
+                    if let error = error {
+                        print("Geocoding error: \(error)")
                         return
                     }
-                    
-                    // Now, create a post in Firestore
-                    let post = Post(id: UUID().uuidString, userID: uid, username: fullName, imageURL: downloadURL.absoluteString, timestamp: Timestamp(date: Date()))
-                    
-                    do {
-                        try db.collection("posts").document(post.id).setData(from: post)
-                        
-                        // Update hasPostedToday to true
-                        db.collection("users").document(uid).updateData([
-                            "hasPostedToday": true
-                        ]) { err in
-                            if let err = err {
-                                print("Error updating document: \(err)")
-                            } else {
-                                print("Document successfully updated")
+                    guard let placemark = placemarks?.first else {
+                        print("No placemarks available")
+                        return
+                    }
+
+                    // Get the state and town
+                    let state = placemark.administrativeArea ?? ""
+                    let town = placemark.locality ?? ""
+
+                    // Convert the UIImage to Data
+                    guard let imageData = uiImage.jpegData(compressionQuality: 0.8) else { return }
+
+                    // Create a storage reference
+                    let storage = Storage.storage()
+                    let storageRef = storage.reference().child("images/\(UUID().uuidString).jpg")
+
+                    // Upload the data
+                    let uploadMetadata = StorageMetadata()
+                    uploadMetadata.contentType = "image/jpeg"
+
+                    storageRef.putData(imageData, metadata: uploadMetadata) { metadata, error in
+                        guard error == nil else {
+                            // handle error
+                            return
+                        }
+                        storageRef.downloadURL { url, error in
+                            guard let downloadURL = url else {
+                                // handle error
+                                return
+                            }
+
+                            // Now, create a post in Firestore
+                            let post = Post(id: UUID().uuidString, userID: uid, username: fullName, imageURL: downloadURL.absoluteString, timestamp: Timestamp(date: Date()), location: GeoPoint(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude), state: state, town: town)
+
+                            do {
+                                try db.collection("posts").document(post.id).setData(from: post)
+                                
+                                // Update hasPostedToday to true
+                                db.collection("users").document(uid).updateData([
+                                    "hasPostedToday": true
+                                ]) { err in
+                                    if let err = err {
+                                        print("Error updating document: \(err)")
+                                    } else {
+                                        print("Document successfully updated")
+                                    }
+                                }
+                                
+                            } catch let error {
+                                print("Error writing post to Firestore: \(error)")
                             }
                         }
-                        
-                    } catch let error {
-                        print("Error writing post to Firestore: \(error)")
                     }
                 }
+            } else {
+                print("Document does not exist")
             }
         }
     }
+
+
 
 
 
