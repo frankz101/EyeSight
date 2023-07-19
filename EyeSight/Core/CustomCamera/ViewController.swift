@@ -36,7 +36,8 @@ class ViewController: UIViewController {
         let button = UIButton()
         let image = UIImage(named: "switchcamera")?.withRenderingMode(.alwaysTemplate)
         button.setImage(image, for: .normal)
-        button.tintColor = .white
+        button.backgroundColor = .white
+        button.tintColor = .red
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -63,6 +64,7 @@ class ViewController: UIViewController {
         checkPermissions()
         setupAndStartCaptureSession()
     }
+    
     
     //MARK:- Camera Setup
     func setupAndStartCaptureSession(){
@@ -180,53 +182,77 @@ class ViewController: UIViewController {
         
         //acitvate the camera button again
         switchCameraButton.isUserInteractionEnabled = true
+        
+        let image = UIImage(named: backCameraOn ? "switchcamera" : "switchcamera_front")?.withRenderingMode(.alwaysTemplate)
+            switchCameraButton.setImage(image, for: .normal)
     }
     
     
     //firebase stuff
     func uploadImageToFirebase(uiImage: UIImage) {
-        
         guard let user = Auth.auth().currentUser else {
-                print("User is not authenticated")
+            print("User is not authenticated")
+            return
+        }
+        
+        let uid = user.uid
+        
+        // Fetch the user's full name from the Firestore document
+        let db = Firestore.firestore()
+        db.collection("users").document(uid).getDocument { (document, error) in
+            guard let document = document, document.exists, let data = document.data(), let fullName = data["fullName"] as? String else {
+                print("Error fetching user data or user document does not exist")
                 return
             }
             
-            let uid = user.uid
-
-        // Convert the UIImage to Data
-        guard let imageData = uiImage.jpegData(compressionQuality: 0.8) else { return }
-
-        // Create a storage reference
-        let storage = Storage.storage()
-        let storageRef = storage.reference().child("images/\(UUID().uuidString).jpg")
-
-        // Upload the data
-        let uploadMetadata = StorageMetadata()
-        uploadMetadata.contentType = "image/jpeg"
-
-        storageRef.putData(imageData, metadata: uploadMetadata) { metadata, error in
-            guard error == nil else {
-                // handle error
-                return
-            }
-            storageRef.downloadURL { url, error in
-                guard let downloadURL = url else {
+            // Convert the UIImage to Data
+            guard let imageData = uiImage.jpegData(compressionQuality: 0.8) else { return }
+            
+            // Create a storage reference
+            let storage = Storage.storage()
+            let storageRef = storage.reference().child("images/\(UUID().uuidString).jpg")
+            
+            // Upload the data
+            let uploadMetadata = StorageMetadata()
+            uploadMetadata.contentType = "image/jpeg"
+            
+            storageRef.putData(imageData, metadata: uploadMetadata) { metadata, error in
+                guard error == nil else {
                     // handle error
                     return
                 }
-                
-                // Now, create a post in Firestore
-                let post = Post(id: UUID().uuidString, userID: uid, imageURL: downloadURL.absoluteString)
-
-                let db = Firestore.firestore()
-                do {
-                    try db.collection("posts").document(post.id).setData(from: post)
-                } catch let error {
-                    print("Error writing post to Firestore: \(error)")
+                storageRef.downloadURL { url, error in
+                    guard let downloadURL = url else {
+                        // handle error
+                        return
+                    }
+                    
+                    // Now, create a post in Firestore
+                    let post = Post(id: UUID().uuidString, userID: uid, username: fullName, imageURL: downloadURL.absoluteString, timestamp: Timestamp(date: Date()))
+                    
+                    do {
+                        try db.collection("posts").document(post.id).setData(from: post)
+                        
+                        // Update hasPostedToday to true
+                        db.collection("users").document(uid).updateData([
+                            "hasPostedToday": true
+                        ]) { err in
+                            if let err = err {
+                                print("Error updating document: \(err)")
+                            } else {
+                                print("Document successfully updated")
+                            }
+                        }
+                        
+                    } catch let error {
+                        print("Error writing post to Firestore: \(error)")
+                    }
                 }
             }
         }
     }
+
+
 
     
     //MARK:- Actions

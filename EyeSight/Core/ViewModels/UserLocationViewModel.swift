@@ -21,6 +21,16 @@ class UserLocationViewModel: ObservableObject {
         self.locationManager = locationManager
     }
     
+    func getUserLocation() -> CLLocation? {
+        if let location = locationManager.currentLocation {
+            return location
+        } else {
+            // Handle the case where the location is not available
+            return nil
+        }
+    }
+
+    
     func updateUserLocation() {
         self.userLocation = locationManager.currentLocation
         if let userLocation = self.userLocation, let user = Auth.auth().currentUser {

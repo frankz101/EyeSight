@@ -8,9 +8,11 @@
 import Foundation
 import UIKit
 import FirebaseStorage
+import Firebase
 
 class UserPhotoViewModel: ObservableObject {
     @Published var imageURL: String?
+    var feedViewModel: FeedViewModel?
 
     func uploadPhoto(_ image: UIImage, completion: @escaping (Bool) -> Void) {
         guard let imageData = image.jpegData(compressionQuality: 0.8) else {
@@ -36,7 +38,19 @@ class UserPhotoViewModel: ObservableObject {
 
                 if let downloadURL = url?.absoluteString {
                     self.imageURL = downloadURL
-                    completion(true)
+
+                    // Update hasPostedToday for the current user
+                    let db = Firestore.firestore()
+                    let userRef = db.collection("users").document(Auth.auth().currentUser?.uid ?? "")
+                    userRef.updateData(["hasPostedToday": true]) { (error) in
+                        if let error = error {
+                            print("Failed to update hasPostedToday: \(error.localizedDescription)")
+                            completion(false)
+                        } else {
+                            self.feedViewModel?.refreshFeed.toggle()
+                            completion(true)
+                        }
+                    }
                 } else {
                     completion(false)
                 }
@@ -44,3 +58,4 @@ class UserPhotoViewModel: ObservableObject {
         }
     }
 }
+

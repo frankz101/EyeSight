@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct FeedView: View {
+    @StateObject var viewModel = FeedViewModel()
+
     var body: some View {
         VStack {
-            
             //Header
             HStack {
                 Text("Feed")
@@ -24,20 +25,25 @@ struct FeedView: View {
             .padding(.vertical,4)
             
             // Posts
-            
             ScrollView(.vertical, showsIndicators: false) {
-                PostView()
-                PostView()
-                PostView()
+                ForEach(viewModel.posts, id: \.id) { post in
+                    PostView(post: post, hasUserPostedToday: viewModel.hasPostedToday)
+                }
             }
-            
-            
             
             Spacer()
         }
-        
+        .onReceive(viewModel.$refreshFeed) { refresh in
+            if refresh {
+                viewModel.forceRefresh()
+                viewModel.refreshFeed = false
+            }
+        }
     }
 }
+
+
+
 
 
 struct FeedView_Previews: PreviewProvider {

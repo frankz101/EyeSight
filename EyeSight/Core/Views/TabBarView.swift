@@ -11,35 +11,41 @@ struct TabBarView: View {
     @ObservedObject var userLocationViewModel: UserLocationViewModel
     @EnvironmentObject var userPhotoViewModel: UserPhotoViewModel
     @State private var selectedTab = 1 // Set the index of MapViewRepresentable tab
+    @State private var isActiveTab: Bool = false
     
     var body: some View {
-        
-            TabView(selection: $selectedTab) {
-                FeedView()
-                    .tabItem{
-                        Label("Feed", systemImage: "house.fill")
-                    }
-                    .tag(0) // Set the tag for the FeedView tab
-                MapViewRepresentable(userLocationViewModel: userLocationViewModel)
-                    .ignoresSafeArea()
-                    .tabItem{
-                        Label("Home",  systemImage:"location.fill")
-                    }
-                    .tag(1) // Set the tag for the MapViewRepresentable tab
-                CameraTestView {
-                    // This code will be executed when the image is captured
-                    self.selectedTab = 0
+        TabView(selection: $selectedTab) {
+            FeedView()
+                .tabItem{
+                    Label("Feed", systemImage: "house.fill")
                 }
+                .tag(0) // Set the tag for the FeedView tab
+                
+            MapWithCameraButtonView(userLocationViewModel: userLocationViewModel)
+                .ignoresSafeArea()
+                .tabItem{
+                    Label("Home",  systemImage:"location.fill")
+                }
+                .tag(1)  // Set the tag for the MapViewRepresentable tab
+                
+            CameraTestView {
+                // This code will be executed when the image is captured
+                self.selectedTab = 0
+            }
+            .tabItem {
+                Label("Camera", systemImage:"camera.fill")
+            }
+            .tag(2) // Set the tag for the CameraView tab
+            
+            FriendsView()
                 .tabItem {
                     Label("Friends", systemImage:"person.fill")
                 }
-                .tag(2) // Set the tag for the FriendsView tab
-
-            }
-        
-        
+                .tag(3)
+        }
     }
 }
+
 
 
 struct TabBarView_Previews: PreviewProvider {

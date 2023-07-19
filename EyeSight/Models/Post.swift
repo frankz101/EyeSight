@@ -7,10 +7,13 @@
 
 import Foundation
 import FirebaseFirestoreSwift
+import FirebaseFirestore
 
 
 struct Post: Identifiable, Codable  {
     let id: String
     var userID: String
+    var username: String
     let imageURL: String
+    let timestamp: Timestamp
 }

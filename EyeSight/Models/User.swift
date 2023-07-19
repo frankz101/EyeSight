@@ -12,5 +12,6 @@ struct User: Identifiable, Codable  {
     let fullName: String
     var email: String
     var friends: [String]?
+    var hasPostedToday: Bool
     let locationId: String?
 }

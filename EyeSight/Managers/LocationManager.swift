@@ -1,16 +1,9 @@
-//
-//  LocationManager.swift
-//  EyeSight
-//
-//  Created by Franklin Zhu on 7/15/23.
-//
-
 import Foundation
 import CoreLocation
 import Firebase
 import FirebaseFirestore
 
-class LocationManager: NSObject, ObservableObject {
+class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     private let locationManager = CLLocationManager()
     private let db = Firestore.firestore()
     @Published var currentLocation: CLLocation?
@@ -55,9 +48,7 @@ class LocationManager: NSObject, ObservableObject {
             print("Unknown location authorization status.")
         }
     }
-}
-
-extension LocationManager: CLLocationManagerDelegate {
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         currentLocation = location
