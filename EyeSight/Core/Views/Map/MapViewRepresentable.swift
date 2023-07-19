@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import MapKit
 
+
 struct MapViewRepresentable: UIViewRepresentable {
     static let locationManager = LocationManager()
     let mapView = MKMapView()
@@ -23,7 +24,11 @@ struct MapViewRepresentable: UIViewRepresentable {
         mapView.delegate = context.coordinator
         mapView.isRotateEnabled = false
         mapView.showsUserLocation = true
+        
+        mapView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+        
         friendListViewModel.fetchFriendLocations()
+        friendListViewModel.fetchFriendPosts()
         return mapView
     }
     
@@ -76,5 +81,6 @@ extension MapViewRepresentable {
             // Store the current location as the last updated location
             lastLocation = currentLocation
         }
+        
     }
 }

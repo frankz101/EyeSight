@@ -17,6 +17,7 @@
 		D436F92D2A66EE9D006C984F /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = D436F92C2A66EE9D006C984F /* SDWebImageSwiftUI */; };
 		D436F9302A6701C1006C984F /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = D436F92F2A6701C1006C984F /* Kingfisher */; };
 		D436F9352A67929B006C984F /* MapWithCameraButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D436F9342A67929B006C984F /* MapWithCameraButtonView.swift */; };
+		D436F9372A6883D6006C984F /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D436F9362A6883D5006C984F /* CustomAnnotationView.swift */; };
 		D4F487362A639829004868A2 /* EyeSightApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F487352A639829004868A2 /* EyeSightApp.swift */; };
 		D4F4873A2A63982E004868A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4F487392A63982E004868A2 /* Assets.xcassets */; };
 		D4F4873D2A63982E004868A2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4F4873C2A63982E004868A2 /* Preview Assets.xcassets */; };
@@ -51,6 +52,7 @@
 		D436F9272A65D3A5006C984F /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 		D436F9292A66EA9F006C984F /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		D436F9342A67929B006C984F /* MapWithCameraButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapWithCameraButtonView.swift; sourceTree = "<group>"; };
+		D436F9362A6883D5006C984F /* CustomAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotationView.swift; sourceTree = "<group>"; };
 		D4F487322A639829004868A2 /* EyeSight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EyeSight.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4F487352A639829004868A2 /* EyeSightApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EyeSightApp.swift; sourceTree = "<group>"; };
 		D4F487392A63982E004868A2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 				D4F4877C2A645C8C004868A2 /* UserListView.swift */,
 				D4F4877E2A645CC6004868A2 /* UserService.swift */,
 				D4F487802A647286004868A2 /* FriendListViewModel.swift */,
+				D436F9362A6883D5006C984F /* CustomAnnotationView.swift */,
 			);
 			path = FriendsList;
 			sourceTree = "<group>";
@@ -370,6 +373,7 @@
 				D4F487652A63A6DF004868A2 /* LoginView.swift in Sources */,
 				D436F9282A65D3A5006C984F /* PostView.swift in Sources */,
 				D4F487362A639829004868A2 /* EyeSightApp.swift in Sources */,
+				D436F9372A6883D6006C984F /* CustomAnnotationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
