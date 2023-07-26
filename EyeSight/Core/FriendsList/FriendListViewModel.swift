@@ -17,6 +17,7 @@ class FriendListViewModel: ObservableObject {
     
     init(mapView: MKMapView) {
         self.mapView = mapView
+        setupFriendsListener()
     }
     
     func fetchFriendLocations() {
@@ -75,6 +76,26 @@ class FriendListViewModel: ObservableObject {
     }
     
     //FETCH ANNOTATIONS OF POSTS
+    func setupFriendsListener() {
+        guard let currentUserID = Auth.auth().currentUser?.uid else { return }
+        let userDocument = Firestore.firestore().collection("users").document(currentUserID)
+
+        // Setup the snapshot listener
+        userDocument.addSnapshotListener { [weak self] (document, error) in
+            if let document = document, document.exists {
+                // Check if the user has posted today
+                if let hasPostedToday = document.data()?["hasPostedToday"] as? Bool,
+                   hasPostedToday == true {
+                    // When friends array changes and user has posted today, fetch friend posts again
+                    self?.fetchFriendPosts()
+                }
+            } else {
+                print("Document does not exist")
+            }
+        }
+    }
+
+
     
     // Fetch annotations for posts
     func fetchFriendPosts() {
@@ -108,7 +129,7 @@ class FriendListViewModel: ObservableObject {
                     let latitude = post.location.latitude
                     let longitude = post.location.longitude
                     // Add the post's location to the map
-                    self?.addPostLocationToMap(postID: post.id, latitude: latitude, longitude: longitude, imageUrl: post.imageURL)
+                    self?.addPostLocationToMap(postID: post.id, latitude: latitude, longitude: longitude, imageUrl: post.imageURL, postId: document.documentID)
                 }
             }
         }
@@ -120,7 +141,7 @@ class FriendListViewModel: ObservableObject {
     
     // MARK: - MKMapViewDelegate
     
-    func addPostLocationToMap(postID: String, latitude: Double, longitude: Double, imageUrl: String?) {
+    func addPostLocationToMap(postID: String, latitude: Double, longitude: Double, imageUrl: String?, postId: String) {
         // Remove old annotation if it exists
         
         if let oldAnnotation = postAnnotations[postID] {
@@ -130,11 +151,10 @@ class FriendListViewModel: ObservableObject {
         
         // Create a new annotation
         let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        let customAnnotation = CustomAnnotation(imageURL: imageUrl!)
+        let customAnnotation = CustomAnnotation(imageURL: imageUrl!, postId: postId)
         
         customAnnotation.coordinate = coordinate
         
-        print(customAnnotation)
 
         
         // Save the annotation in the dictionary
