@@ -19,6 +19,7 @@
 		D436F9352A67929B006C984F /* MapWithCameraButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D436F9342A67929B006C984F /* MapWithCameraButtonView.swift */; };
 		D436F9372A6883D6006C984F /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D436F9362A6883D5006C984F /* CustomAnnotationView.swift */; };
 		D436F9392A71AE81006C984F /* PostMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D436F9382A71AE81006C984F /* PostMapView.swift */; };
+		D436F93D2A71CB59006C984F /* UserCustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D436F93C2A71CB58006C984F /* UserCustomAnnotation.swift */; };
 		D4F487362A639829004868A2 /* EyeSightApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F487352A639829004868A2 /* EyeSightApp.swift */; };
 		D4F4873A2A63982E004868A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4F487392A63982E004868A2 /* Assets.xcassets */; };
 		D4F4873D2A63982E004868A2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4F4873C2A63982E004868A2 /* Preview Assets.xcassets */; };
@@ -55,6 +56,7 @@
 		D436F9342A67929B006C984F /* MapWithCameraButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapWithCameraButtonView.swift; sourceTree = "<group>"; };
 		D436F9362A6883D5006C984F /* CustomAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotationView.swift; sourceTree = "<group>"; };
 		D436F9382A71AE81006C984F /* PostMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostMapView.swift; sourceTree = "<group>"; };
+		D436F93C2A71CB58006C984F /* UserCustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCustomAnnotation.swift; sourceTree = "<group>"; };
 		D4F487322A639829004868A2 /* EyeSight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EyeSight.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4F487352A639829004868A2 /* EyeSightApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EyeSightApp.swift; sourceTree = "<group>"; };
 		D4F487392A63982E004868A2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -249,6 +251,7 @@
 				D4F4877E2A645CC6004868A2 /* UserService.swift */,
 				D4F487802A647286004868A2 /* FriendListViewModel.swift */,
 				D436F9362A6883D5006C984F /* CustomAnnotationView.swift */,
+				D436F93C2A71CB58006C984F /* UserCustomAnnotation.swift */,
 			);
 			path = FriendsList;
 			sourceTree = "<group>";
@@ -355,6 +358,7 @@
 				D4F4878F2A65BCC0004868A2 /* Post.swift in Sources */,
 				D4F487632A63A6AE004868A2 /* SignupView.swift in Sources */,
 				D4F487672A63A7E9004868A2 /* TabBarView.swift in Sources */,
+				D436F93D2A71CB59006C984F /* UserCustomAnnotation.swift in Sources */,
 				D4F4877D2A645C8C004868A2 /* UserListView.swift in Sources */,
 				D4F4878D2A659A24004868A2 /* UserPhotoViewModel.swift in Sources */,
 				D4F487512A639DDA004868A2 /* LocationManager.swift in Sources */,

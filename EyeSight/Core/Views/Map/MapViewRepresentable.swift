@@ -27,7 +27,13 @@ struct MapViewRepresentable: UIViewRepresentable {
         mapView.isRotateEnabled = false
         mapView.showsUserLocation = true
         
-        mapView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+        
+//        mapView.register(UserCustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+//        mapView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+        
+        mapView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: "CustomAnnotationView")
+        mapView.register(UserCustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: "UserCustomAnnotationView")
+
         
         friendListViewModel.fetchFriendLocations()
         friendListViewModel.fetchFriendPosts()
@@ -71,9 +77,37 @@ extension MapViewRepresentable {
             lastLocation = currentLocation
         }
         
+        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+            if let userCustomAnnotation = annotation as? UserCustomAnnotation {
+                let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "UserCustomAnnotationView") as? UserCustomAnnotationView
+                // Configure and return the UserCustomAnnotationView
+                return annotationView
+            } else if let customAnnotation = annotation as? CustomAnnotation {
+                let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "CustomAnnotationView") as? CustomAnnotationView
+                // Configure and return the CustomAnnotationView
+                return annotationView
+            }
+            // Handle other annotation types if needed
+            return nil
+        }
+
+
+        
         func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-            if let annotation = view.annotation as? CustomAnnotation {  // Check if the annotation is a CustomAnnotation
-                parent.onAnnotationTapped(annotation.postId)  // Call onAnnotationTapped with the postId
+            if let annotation = view.annotation as? CustomAnnotation {
+                parent.onAnnotationTapped(annotation.postId)
+
+                let latitudeDelta: CLLocationDegrees = 0.05
+                let longitudeDelta: CLLocationDegrees = 0.05
+
+                let adjustedLatitude = annotation.coordinate.latitude - latitudeDelta / 2
+                let adjustedCoordinate = CLLocationCoordinate2D(latitude: adjustedLatitude, longitude: annotation.coordinate.longitude)
+
+                let region = MKCoordinateRegion(
+                    center: adjustedCoordinate,
+                    span: MKCoordinateSpan(latitudeDelta: latitudeDelta, longitudeDelta: longitudeDelta)
+                )
+                mapView.setRegion(region, animated: true)
             }
         }
     }
