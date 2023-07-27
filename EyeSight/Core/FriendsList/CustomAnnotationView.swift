@@ -12,8 +12,10 @@ import MapKit
 
 class CustomAnnotation: MKPointAnnotation {
     let imageURL: String
-    init(imageURL: String) {
+    let postId: String
+    init(imageURL: String, postId: String) {
         self.imageURL = imageURL
+        self.postId = postId
     }
 }
 

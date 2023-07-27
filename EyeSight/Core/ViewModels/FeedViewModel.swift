@@ -12,6 +12,10 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 class FeedViewModel: ObservableObject {
+    
+    @Published var post: Post?
+    
+    
     @Published var posts = [Post]()
     @Published var hasPostedToday = false
     @Published var refreshFeed: Bool = false {
@@ -32,6 +36,23 @@ class FeedViewModel: ObservableObject {
     
     init() {
         generateFeedForUser()
+    }
+    
+    func fetchPost(postId: String) {
+        db.collection("posts").document(postId).getDocument { [weak self] (document, error) in
+            if let document = document, document.exists {
+                do {
+                    let post = try document.data(as: Post.self)
+                    DispatchQueue.main.async {
+                        self?.post = post
+                    }
+                } catch {
+                    print("Error decoding post: \(error)")
+                }
+            } else {
+                print("Document does not exist")
+            }
+        }
     }
 
     private func generateFeedForUser() {

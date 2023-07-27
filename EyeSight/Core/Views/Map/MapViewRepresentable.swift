@@ -9,23 +9,31 @@ import Foundation
 import SwiftUI
 import MapKit
 
-
 struct MapViewRepresentable: UIViewRepresentable {
+    let onAnnotationTapped: (String) -> Void  // Changed this to take a String
     static let locationManager = LocationManager()
     let mapView = MKMapView()
     let userLocationViewModel: UserLocationViewModel
     let friendListViewModel: FriendListViewModel
     
-    init(userLocationViewModel: UserLocationViewModel) {
+    init(userLocationViewModel: UserLocationViewModel, onAnnotationTapped: @escaping (String) -> Void) {  // Changed this to take a String
         self.userLocationViewModel = userLocationViewModel
+        self.onAnnotationTapped = onAnnotationTapped
         self.friendListViewModel = FriendListViewModel(mapView: self.mapView)
     }
+    
     func makeUIView(context: Context) -> some UIView {
         mapView.delegate = context.coordinator
         mapView.isRotateEnabled = false
         mapView.showsUserLocation = true
         
-        mapView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+        
+//        mapView.register(UserCustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+//        mapView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+        
+        mapView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: "CustomAnnotationView")
+        mapView.register(UserCustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: "UserCustomAnnotationView")
+
         
         friendListViewModel.fetchFriendLocations()
         friendListViewModel.fetchFriendPosts()
@@ -35,13 +43,10 @@ struct MapViewRepresentable: UIViewRepresentable {
     func updateUIView(_ uiView: UIViewType, context: Context) {
     }
 
-
-    
     func makeCoordinator() -> MapCoordinator {
         return MapCoordinator(parent: self)
     }
     
-    // Add this to your MapViewRepresentable
     func centerMapOnUserLocation() {
         if let userLocation = mapView.userLocation.location {
             let region = MKCoordinateRegion(
@@ -51,7 +56,6 @@ struct MapViewRepresentable: UIViewRepresentable {
             mapView.setRegion(region, animated: true)
         }
     }
-
 }
 
 extension MapViewRepresentable {
@@ -65,22 +69,46 @@ extension MapViewRepresentable {
         }
         
         func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-//            let region = MKCoordinateRegion(
-//                center: userLocation.coordinate,
-//                span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
-//            )
-//            mapView.setRegion(region, animated: true)
-            
-            // Calculate distance from last location
             let currentLocation = CLLocation(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
             if let lastLocation = lastLocation, lastLocation.distance(from: currentLocation) > 7.62 {
-                // Update the user location in the database
                 parent.userLocationViewModel.updateUserLocation()
             }
             
-            // Store the current location as the last updated location
             lastLocation = currentLocation
         }
         
+        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+            if let userCustomAnnotation = annotation as? UserCustomAnnotation {
+                let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "UserCustomAnnotationView") as? UserCustomAnnotationView
+                // Configure and return the UserCustomAnnotationView
+                return annotationView
+            } else if let customAnnotation = annotation as? CustomAnnotation {
+                let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "CustomAnnotationView") as? CustomAnnotationView
+                // Configure and return the CustomAnnotationView
+                return annotationView
+            }
+            // Handle other annotation types if needed
+            return nil
+        }
+
+
+        
+        func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+            if let annotation = view.annotation as? CustomAnnotation {
+                parent.onAnnotationTapped(annotation.postId)
+
+                let latitudeDelta: CLLocationDegrees = 0.05
+                let longitudeDelta: CLLocationDegrees = 0.05
+
+                let adjustedLatitude = annotation.coordinate.latitude - latitudeDelta / 2
+                let adjustedCoordinate = CLLocationCoordinate2D(latitude: adjustedLatitude, longitude: annotation.coordinate.longitude)
+
+                let region = MKCoordinateRegion(
+                    center: adjustedCoordinate,
+                    span: MKCoordinateSpan(latitudeDelta: latitudeDelta, longitudeDelta: longitudeDelta)
+                )
+                mapView.setRegion(region, animated: true)
+            }
+        }
     }
 }
