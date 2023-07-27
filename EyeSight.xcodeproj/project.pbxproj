@@ -24,7 +24,6 @@
 		D4F4874D2A639C0B004868A2 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F4874C2A639C0B004868A2 /* HomeView.swift */; };
 		D4F4874F2A639C72004868A2 /* MapViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F4874E2A639C72004868A2 /* MapViewRepresentable.swift */; };
 		D4F487512A639DDA004868A2 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F487502A639DDA004868A2 /* LocationManager.swift */; };
-		D4F4875A2A63A59E004868A2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D4F487592A63A59D004868A2 /* GoogleService-Info.plist */; };
 		D4F4875D2A63A60C004868A2 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F4875C2A63A60C004868A2 /* AuthService.swift */; };
 		D4F4875F2A63A646004868A2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F4875E2A63A646004868A2 /* User.swift */; };
 		D4F487632A63A6AE004868A2 /* SignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F487622A63A6AE004868A2 /* SignupView.swift */; };
@@ -45,6 +44,7 @@
 		D4F4878A2A6595A0004868A2 /* CameraViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F487892A6595A0004868A2 /* CameraViewRepresentable.swift */; };
 		D4F4878D2A659A24004868A2 /* UserPhotoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F4878C2A659A24004868A2 /* UserPhotoViewModel.swift */; };
 		D4F4878F2A65BCC0004868A2 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F4878E2A65BCC0004868A2 /* Post.swift */; };
+		FBF3D18E2A69D05600B251F8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FBF3D18D2A69D05600B251F8 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,7 +60,6 @@
 		D4F4874C2A639C0B004868A2 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		D4F4874E2A639C72004868A2 /* MapViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewRepresentable.swift; sourceTree = "<group>"; };
 		D4F487502A639DDA004868A2 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
-		D4F487592A63A59D004868A2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D4F4875C2A63A60C004868A2 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		D4F4875E2A63A646004868A2 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		D4F487622A63A6AE004868A2 /* SignupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
@@ -79,9 +78,9 @@
 		D4F487852A6592AB004868A2 /* ViewController+Extras.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Extras.swift"; sourceTree = "<group>"; };
 		D4F487872A65949B004868A2 /* CapturedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapturedImageView.swift; sourceTree = "<group>"; };
 		D4F487892A6595A0004868A2 /* CameraViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewRepresentable.swift; sourceTree = "<group>"; };
-		D4F4878B2A659619004868A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		D4F4878C2A659A24004868A2 /* UserPhotoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPhotoViewModel.swift; sourceTree = "<group>"; };
 		D4F4878E2A65BCC0004868A2 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		FBF3D18D2A69D05600B251F8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,7 +121,7 @@
 		D4F487292A639829004868A2 = {
 			isa = PBXGroup;
 			children = (
-				D4F487592A63A59D004868A2 /* GoogleService-Info.plist */,
+				FBF3D18D2A69D05600B251F8 /* GoogleService-Info.plist */,
 				D4F487342A639829004868A2 /* EyeSight */,
 				D4F487332A639829004868A2 /* Products */,
 			);
@@ -139,7 +138,6 @@
 		D4F487342A639829004868A2 /* EyeSight */ = {
 			isa = PBXGroup;
 			children = (
-				D4F4878B2A659619004868A2 /* Info.plist */,
 				D4F487472A639B67004868A2 /* App */,
 				D4F487462A639B63004868A2 /* Core */,
 				D4F487432A639B47004868A2 /* Extensions */,
@@ -333,7 +331,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4F4873D2A63982E004868A2 /* Preview Assets.xcassets in Resources */,
-				D4F4875A2A63A59E004868A2 /* GoogleService-Info.plist in Resources */,
+				FBF3D18E2A69D05600B251F8 /* GoogleService-Info.plist in Resources */,
 				D4F4873A2A63982E004868A2 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -502,10 +500,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"EyeSight/Preview Content\"";
-				DEVELOPMENT_TEAM = Z798A3RAY3;
+				DEVELOPMENT_TEAM = 86S7GJZC44;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = EyeSight/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Allow access to camera";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Please allow us to access your location!";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -518,7 +517,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ucla.EyeSight;
+				PRODUCT_BUNDLE_IDENTIFIER = eyesight;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -534,10 +533,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"EyeSight/Preview Content\"";
-				DEVELOPMENT_TEAM = Z798A3RAY3;
+				DEVELOPMENT_TEAM = 86S7GJZC44;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = EyeSight/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Allow access to camera";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Please allow us to access your location!";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -550,7 +550,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ucla.EyeSight;
+				PRODUCT_BUNDLE_IDENTIFIER = eyesight;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
