@@ -20,6 +20,11 @@
 		D436F9372A6883D6006C984F /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D436F9362A6883D5006C984F /* CustomAnnotationView.swift */; };
 		D436F9392A71AE81006C984F /* PostMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D436F9382A71AE81006C984F /* PostMapView.swift */; };
 		D436F93D2A71CB59006C984F /* UserCustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D436F93C2A71CB58006C984F /* UserCustomAnnotation.swift */; };
+		D436F93F2A71EC80006C984F /* CommentSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D436F93E2A71EC80006C984F /* CommentSection.swift */; };
+		D436F9412A71ECA7006C984F /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = D436F9402A71ECA7006C984F /* Comment.swift */; };
+		D436F9432A71ED6A006C984F /* CommentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D436F9422A71ED6A006C984F /* CommentViewModel.swift */; };
+		D436F9452A71EE74006C984F /* CommentSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D436F9442A71EE74006C984F /* CommentSectionView.swift */; };
+		D436F9472A71EED4006C984F /* CommentButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D436F9462A71EED4006C984F /* CommentButtonView.swift */; };
 		D4F487362A639829004868A2 /* EyeSightApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F487352A639829004868A2 /* EyeSightApp.swift */; };
 		D4F4873A2A63982E004868A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4F487392A63982E004868A2 /* Assets.xcassets */; };
 		D4F4873D2A63982E004868A2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4F4873C2A63982E004868A2 /* Preview Assets.xcassets */; };
@@ -57,6 +62,11 @@
 		D436F9362A6883D5006C984F /* CustomAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotationView.swift; sourceTree = "<group>"; };
 		D436F9382A71AE81006C984F /* PostMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostMapView.swift; sourceTree = "<group>"; };
 		D436F93C2A71CB58006C984F /* UserCustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCustomAnnotation.swift; sourceTree = "<group>"; };
+		D436F93E2A71EC80006C984F /* CommentSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentSection.swift; sourceTree = "<group>"; };
+		D436F9402A71ECA7006C984F /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		D436F9422A71ED6A006C984F /* CommentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewModel.swift; sourceTree = "<group>"; };
+		D436F9442A71EE74006C984F /* CommentSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentSectionView.swift; sourceTree = "<group>"; };
+		D436F9462A71EED4006C984F /* CommentButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentButtonView.swift; sourceTree = "<group>"; };
 		D4F487322A639829004868A2 /* EyeSight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EyeSight.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4F487352A639829004868A2 /* EyeSightApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EyeSightApp.swift; sourceTree = "<group>"; };
 		D4F487392A63982E004868A2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -111,6 +121,8 @@
 				D4F487682A63A80B004868A2 /* FeedView.swift */,
 				D436F9272A65D3A5006C984F /* PostView.swift */,
 				D436F9382A71AE81006C984F /* PostMapView.swift */,
+				D436F9442A71EE74006C984F /* CommentSectionView.swift */,
+				D436F9462A71EED4006C984F /* CommentButtonView.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -206,6 +218,8 @@
 				D4F4876C2A64368F004868A2 /* Friend.swift */,
 				D4F4876E2A64369A004868A2 /* Location.swift */,
 				D4F4878E2A65BCC0004868A2 /* Post.swift */,
+				D436F93E2A71EC80006C984F /* CommentSection.swift */,
+				D436F9402A71ECA7006C984F /* Comment.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -216,6 +230,7 @@
 				D4F487702A64395C004868A2 /* UserLocationViewModel.swift */,
 				D4F4878C2A659A24004868A2 /* UserPhotoViewModel.swift */,
 				D436F9292A66EA9F006C984F /* FeedViewModel.swift */,
+				D436F9422A71ED6A006C984F /* CommentViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -369,18 +384,23 @@
 				D436F9232A65C806006C984F /* CameraTestView.swift in Sources */,
 				D4F4874D2A639C0B004868A2 /* HomeView.swift in Sources */,
 				D4F487712A64395D004868A2 /* UserLocationViewModel.swift in Sources */,
+				D436F9452A71EE74006C984F /* CommentSectionView.swift in Sources */,
+				D436F9432A71ED6A006C984F /* CommentViewModel.swift in Sources */,
 				D436F9392A71AE81006C984F /* PostMapView.swift in Sources */,
 				D4F4875F2A63A646004868A2 /* User.swift in Sources */,
 				D436F92A2A66EA9F006C984F /* FeedViewModel.swift in Sources */,
 				D4F4875D2A63A60C004868A2 /* AuthService.swift in Sources */,
 				D4F4876D2A64368F004868A2 /* Friend.swift in Sources */,
+				D436F93F2A71EC80006C984F /* CommentSection.swift in Sources */,
 				D4F4874F2A639C72004868A2 /* MapViewRepresentable.swift in Sources */,
 				D4F487812A647287004868A2 /* FriendListViewModel.swift in Sources */,
+				D436F9472A71EED4006C984F /* CommentButtonView.swift in Sources */,
 				D4F4876B2A63A818004868A2 /* FriendsView.swift in Sources */,
 				D4F487882A65949C004868A2 /* CapturedImageView.swift in Sources */,
 				D4F487652A63A6DF004868A2 /* LoginView.swift in Sources */,
 				D436F9282A65D3A5006C984F /* PostView.swift in Sources */,
 				D4F487362A639829004868A2 /* EyeSightApp.swift in Sources */,
+				D436F9412A71ECA7006C984F /* Comment.swift in Sources */,
 				D436F9372A6883D6006C984F /* CustomAnnotationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

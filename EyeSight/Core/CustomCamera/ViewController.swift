@@ -251,8 +251,17 @@ class ViewController: UIViewController {
                                 return
                             }
 
-                            // Now, create a post in Firestore
-                            let post = Post(id: UUID().uuidString, userID: uid, username: fullName, imageURL: downloadURL.absoluteString, timestamp: Timestamp(date: Date()), location: GeoPoint(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude), state: state, town: town)
+                            // Now, create a comment section in Firestore
+                            let commentSectionID = UUID().uuidString
+                            let newCommentSection = CommentSection(id: commentSectionID, participants: [])
+                            do {
+                                try db.collection("commentSections").document(commentSectionID).setData(from: newCommentSection)
+                            } catch let error {
+                                print("Error writing comment section to Firestore: \(error)")
+                            }
+
+                            // Create a post in Firestore
+                            let post = Post(id: UUID().uuidString, userID: uid, username: fullName, imageURL: downloadURL.absoluteString, timestamp: Timestamp(date: Date()), location: GeoPoint(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude), state: state, town: town, commentSectionID: commentSectionID)
 
                             do {
                                 try db.collection("posts").document(post.id).setData(from: post)
@@ -279,6 +288,7 @@ class ViewController: UIViewController {
             }
         }
     }
+
 
 
 

@@ -19,4 +19,5 @@ struct Post: Identifiable, Codable  {
     let location: GeoPoint
     var state: String
     var town: String
+    var commentSectionID: String
 }

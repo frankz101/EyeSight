@@ -100,6 +100,7 @@ class FriendListViewModel: ObservableObject {
     
     // Fetch annotations for posts
     func fetchFriendPosts() {
+        
         guard let currentUserID = Auth.auth().currentUser?.uid else { return }
         let userDocument = Firestore.firestore().collection("users").document(currentUserID)
         userDocument.getDocument { [weak self] (document, error) in
@@ -115,6 +116,7 @@ class FriendListViewModel: ObservableObject {
     
     // Fetch the posts for a specific friend
     func fetchPostsForFriend(friendID: String) {
+        
         let postsCollection = Firestore.firestore().collection("posts")
         let query = postsCollection.whereField("userID", isEqualTo: friendID)
         
@@ -126,7 +128,9 @@ class FriendListViewModel: ObservableObject {
             
             for document in documents {
                 
+                
                 if let post = try? document.data(as: Post.self) {
+                    print("heyyy")
                     let latitude = post.location.latitude
                     let longitude = post.location.longitude
                     // Add the post's location to the map
@@ -144,6 +148,8 @@ class FriendListViewModel: ObservableObject {
     
     func addPostLocationToMap(postID: String, latitude: Double, longitude: Double, imageUrl: String?, postId: String) {
         // Remove old annotation if it exists
+        
+        print("whatsup")
         
         if let oldAnnotation = postAnnotations[postID] {
             mapView?.removeAnnotation(oldAnnotation)

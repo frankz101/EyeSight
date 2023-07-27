@@ -11,6 +11,7 @@ import FirebaseFirestore
 
 struct PostMapView: View {
     @StateObject var viewModel = FeedViewModel()
+    @StateObject var commentViewModel = CommentViewModel()
     
     let postId: String
     
@@ -60,6 +61,23 @@ struct PostMapView: View {
                     }
                 }
                 
+                // Comment Section Button
+                if let commentSectionID = viewModel.post?.commentSectionID {
+                    Button(action: {
+                        // Navigate to the comment section
+                        commentViewModel.isShowingCommentSection = true
+                    }) {
+                        Text("View Comments")
+                            .padding()
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(8)
+                    }
+                    .padding()
+                    .sheet(isPresented: $commentViewModel.isShowingCommentSection) {
+                        CommentSectionView(viewModel: commentViewModel, commentSectionID: commentSectionID)
+                    }
+                }
             }
             .onAppear {
                 viewModel.fetchPost(postId: postId)
@@ -67,6 +85,7 @@ struct PostMapView: View {
         }
     }
 }
+
 
 
 
