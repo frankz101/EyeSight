@@ -23,7 +23,20 @@ class AuthService: ObservableObject {
             }
     }
     func login(withEmail email: String, password: String) async throws {
-
+        do {
+                let result = try await Auth.auth().signIn(withEmail: email, password: password)
+                self.userSession = result.user
+                
+                let docSnapshot = try await Firestore.firestore().collection("users").document(result.user.uid).getDocument()
+                guard let data = docSnapshot.data() else {
+                    print("Document data was empty.")
+                    return
+                }
+                let user = try Firestore.Decoder().decode(User.self, from: data)
+                print("User: \(user)")
+            } catch {
+                print("Failed to sign in user with error \(error.localizedDescription)")
+            }
     }
 
     func createUser(email: String, password: String, fullName: String) async throws {
