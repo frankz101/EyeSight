@@ -11,6 +11,7 @@ struct TabBarView: View {
     @ObservedObject var userLocationViewModel: UserLocationViewModel
     @EnvironmentObject var userPhotoViewModel: UserPhotoViewModel
     @ObservedObject var profileViewModel: ProfileViewModel
+    @ObservedObject var friendsViewModel: FriendsViewModel
     @State private var selectedTab = 1 // Set the index of MapViewRepresentable tab
     @State private var isActiveTab: Bool = false
     
@@ -22,7 +23,7 @@ struct TabBarView: View {
                 }
                 .tag(0)
 
-            MapWithCameraButtonView(userLocationViewModel: userLocationViewModel)
+            MapWithCameraButtonView(userLocationViewModel: userLocationViewModel, friendsViewModel: friendsViewModel, viewModel: profileViewModel)
                 .ignoresSafeArea()
                 .tabItem{
                     Label("Home",  systemImage:"location.fill")

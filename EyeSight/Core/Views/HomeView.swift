@@ -11,15 +11,18 @@ struct HomeView: View {
     @EnvironmentObject var viewModel: AuthService
     @ObservedObject var profileViewModel: ProfileViewModel
     @ObservedObject var userLocationViewModel: UserLocationViewModel
+    @ObservedObject var friendsViewModel: FriendsViewModel
 
         init() {
             self.userLocationViewModel = UserLocationViewModel(locationManager: LocationManager())
             self.profileViewModel = ProfileViewModel()
+            self.friendsViewModel = FriendsViewModel()
         }
     var body: some View {
         Group {
             if viewModel.userSession != nil {
-                TabBarView(userLocationViewModel: userLocationViewModel, profileViewModel: profileViewModel)
+                MapWithCameraButtonView(userLocationViewModel: userLocationViewModel, friendsViewModel: friendsViewModel, viewModel: profileViewModel)
+                    .ignoresSafeArea()
             } else {
                 LoginView()
             }

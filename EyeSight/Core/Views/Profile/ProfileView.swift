@@ -79,6 +79,12 @@ struct ProfileView: View {
             .padding(.horizontal, 16)
             .padding(.vertical,4)
             Spacer()
+            NavigationLink(destination: FriendsView()) {
+                Text("Add Friends")
+            }
+            Spacer()
+
+
             Button {
                 authViewModel.signout()
             } label: {

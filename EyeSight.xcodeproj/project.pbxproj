@@ -31,6 +31,9 @@
 		D436F9512A72CE23006C984F /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = D436F9502A72CE23006C984F /* CropViewController */; };
 		D436F9532A72CE23006C984F /* TOCropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = D436F9522A72CE23006C984F /* TOCropViewController */; };
 		D436F9552A72CE36006C984F /* CropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D436F9542A72CE36006C984F /* CropViewController.swift */; };
+		D436F9592A72FC80006C984F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D436F9582A72FC80006C984F /* GoogleService-Info.plist */; };
+		D436F95B2A73008B006C984F /* FriendDetailSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D436F95A2A73008B006C984F /* FriendDetailSheetView.swift */; };
+		D436F95D2A7306B9006C984F /* FriendsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D436F95C2A7306B9006C984F /* FriendsViewModel.swift */; };
 		D4F487362A639829004868A2 /* EyeSightApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F487352A639829004868A2 /* EyeSightApp.swift */; };
 		D4F4873A2A63982E004868A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4F487392A63982E004868A2 /* Assets.xcassets */; };
 		D4F4873D2A63982E004868A2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4F4873C2A63982E004868A2 /* Preview Assets.xcassets */; };
@@ -57,7 +60,6 @@
 		D4F4878A2A6595A0004868A2 /* CameraViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F487892A6595A0004868A2 /* CameraViewRepresentable.swift */; };
 		D4F4878D2A659A24004868A2 /* UserPhotoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F4878C2A659A24004868A2 /* UserPhotoViewModel.swift */; };
 		D4F4878F2A65BCC0004868A2 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F4878E2A65BCC0004868A2 /* Post.swift */; };
-		FBF3D18E2A69D05600B251F8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FBF3D18D2A69D05600B251F8 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -77,6 +79,9 @@
 		D436F94B2A72C054006C984F /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		D436F94D2A72C710006C984F /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		D436F9542A72CE36006C984F /* CropViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropViewController.swift; sourceTree = "<group>"; };
+		D436F9582A72FC80006C984F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D436F95A2A73008B006C984F /* FriendDetailSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendDetailSheetView.swift; sourceTree = "<group>"; };
+		D436F95C2A7306B9006C984F /* FriendsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewModel.swift; sourceTree = "<group>"; };
 		D4F487322A639829004868A2 /* EyeSight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EyeSight.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4F487352A639829004868A2 /* EyeSightApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EyeSightApp.swift; sourceTree = "<group>"; };
 		D4F487392A63982E004868A2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -104,7 +109,6 @@
 		D4F487892A6595A0004868A2 /* CameraViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewRepresentable.swift; sourceTree = "<group>"; };
 		D4F4878C2A659A24004868A2 /* UserPhotoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPhotoViewModel.swift; sourceTree = "<group>"; };
 		D4F4878E2A65BCC0004868A2 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
-		FBF3D18D2A69D05600B251F8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +147,7 @@
 			children = (
 				D4F4874E2A639C72004868A2 /* MapViewRepresentable.swift */,
 				D436F9342A67929B006C984F /* MapWithCameraButtonView.swift */,
+				D436F95A2A73008B006C984F /* FriendDetailSheetView.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -161,7 +166,7 @@
 		D4F487292A639829004868A2 = {
 			isa = PBXGroup;
 			children = (
-				FBF3D18D2A69D05600B251F8 /* GoogleService-Info.plist */,
+				D436F9582A72FC80006C984F /* GoogleService-Info.plist */,
 				D4F487342A639829004868A2 /* EyeSight */,
 				D4F487332A639829004868A2 /* Products */,
 			);
@@ -252,6 +257,7 @@
 				D4F4878C2A659A24004868A2 /* UserPhotoViewModel.swift */,
 				D436F9292A66EA9F006C984F /* FeedViewModel.swift */,
 				D436F9422A71ED6A006C984F /* CommentViewModel.swift */,
+				D436F95C2A7306B9006C984F /* FriendsViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -379,8 +385,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4F4873D2A63982E004868A2 /* Preview Assets.xcassets in Resources */,
-				FBF3D18E2A69D05600B251F8 /* GoogleService-Info.plist in Resources */,
 				D4F4873A2A63982E004868A2 /* Assets.xcassets in Resources */,
+				D436F9592A72FC80006C984F /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -392,6 +398,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D436F94E2A72C710006C984F /* ImagePicker.swift in Sources */,
+				D436F95B2A73008B006C984F /* FriendDetailSheetView.swift in Sources */,
 				D4F4878A2A6595A0004868A2 /* CameraViewRepresentable.swift in Sources */,
 				D4F487692A63A80B004868A2 /* FeedView.swift in Sources */,
 				D436F9352A67929B006C984F /* MapWithCameraButtonView.swift in Sources */,
@@ -422,6 +429,7 @@
 				D4F4876D2A64368F004868A2 /* Friend.swift in Sources */,
 				D436F93F2A71EC80006C984F /* CommentSection.swift in Sources */,
 				D4F4874F2A639C72004868A2 /* MapViewRepresentable.swift in Sources */,
+				D436F95D2A7306B9006C984F /* FriendsViewModel.swift in Sources */,
 				D4F487812A647287004868A2 /* FriendListViewModel.swift in Sources */,
 				D436F9472A71EED4006C984F /* CommentButtonView.swift in Sources */,
 				D4F4876B2A63A818004868A2 /* FriendsView.swift in Sources */,
@@ -559,11 +567,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"EyeSight/Preview Content\"";
-				DEVELOPMENT_TEAM = 86S7GJZC44;
+				DEVELOPMENT_TEAM = Z798A3RAY3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = EyeSight/Info.plist;
-				INFOPLIST_KEY_NSCameraUsageDescription = "Allow access to camera";
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to take photos";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Please allow us to access your location!";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -576,7 +584,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = eyesight;
+				PRODUCT_BUNDLE_IDENTIFIER = ucla;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -592,11 +600,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"EyeSight/Preview Content\"";
-				DEVELOPMENT_TEAM = 86S7GJZC44;
+				DEVELOPMENT_TEAM = Z798A3RAY3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = EyeSight/Info.plist;
-				INFOPLIST_KEY_NSCameraUsageDescription = "Allow access to camera";
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to take photos";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Please allow us to access your location!";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -609,7 +617,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = eyesight;
+				PRODUCT_BUNDLE_IDENTIFIER = ucla;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

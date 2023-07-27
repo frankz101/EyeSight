@@ -12,17 +12,45 @@ struct IdentifiablePostId: Identifiable {
     let postId: String
 }
 
+enum ActiveSheet: Identifiable {
+    case first, second(IdentifiablePostId)
+    
+    var id: Int {
+        switch self {
+        case .first:
+            return 0
+        case .second:
+            return 1
+        }
+    }
+}
+
 struct MapWithCameraButtonView: View {
     @State private var selectedPostId: IdentifiablePostId? = nil
+    @State private var isShowingFirstSheet = true
     @ObservedObject var userLocationViewModel: UserLocationViewModel
-
+    @ObservedObject var friendsViewModel: FriendsViewModel
+    @ObservedObject var viewModel: ProfileViewModel
+    
     var body: some View {
         ZStack {
             MapViewRepresentable(userLocationViewModel: userLocationViewModel, onAnnotationTapped: { postId in
                 selectedPostId = IdentifiablePostId(id: postId, postId: postId)
+                isShowingFirstSheet = false
             })
+            .sheet(isPresented: $isShowingFirstSheet, onDismiss: {
+                if selectedPostId == nil {
+                    isShowingFirstSheet = true
+                }
+            }) {
+                FriendDetailSheetView(friendsViewModel: friendsViewModel, viewModel: viewModel)
+                    .presentationDetents([.fraction(0.1),.medium,.large])
+                    .presentationBackgroundInteraction(.enabled(upThrough: .medium))
+            }
             .sheet(item: $selectedPostId, onDismiss: {
                 print("Sheet dismissed")
+                isShowingFirstSheet = true
+                selectedPostId = nil
             }) { identifiablePostId in
                 PostMapView(postId: identifiablePostId.postId)
                     .presentationDetents([.medium, .large])
@@ -31,6 +59,7 @@ struct MapWithCameraButtonView: View {
         }
     }
 }
+
 
 
 //struct MapWithCameraButtonView: View {
