@@ -25,11 +25,11 @@ class CustomAnnotationView: MKAnnotationView {
             guard let customAnnotation = newValue as? CustomAnnotation else { return }
             
             if let url = URL(string: customAnnotation.imageURL) {
-                let processor = DownsamplingImageProcessor(size: CGSize(width: 50, height: 50))
-                KingfisherManager.shared.retrieveImage(with: url, options: [.processor(processor)]) { result in
+                KingfisherManager.shared.retrieveImage(with: url) { result in
                     switch result {
                     case .success(let value):
-                        self.image = value.image
+                        let rectangleImage = self.makeRectangleImage(image: value.image, width: 50, borderWidth: 2, borderColor: .white)
+                        self.image = rectangleImage
                     case .failure(let error):
                         print("Error: \(error)") // handle the error appropriately
                     }
@@ -37,6 +37,31 @@ class CustomAnnotationView: MKAnnotationView {
             }
         }
     }
+
+
+    private func makeRectangleImage(image: UIImage, width: CGFloat, borderWidth: CGFloat, borderColor: UIColor) -> UIImage {
+        let aspectRatio: CGFloat = 3/4
+        let size = CGSize(width: width, height: width / aspectRatio)
+        
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        let context = UIGraphicsGetCurrentContext()!
+
+        // Draw the image in a rectangle
+        let imageRect = CGRect(x: borderWidth, y: borderWidth, width: size.width - 2 * borderWidth, height: size.height - 2 * borderWidth)
+        image.draw(in: imageRect)
+
+        // Draw the border
+        context.setStrokeColor(borderColor.cgColor)
+        context.setLineWidth(borderWidth)
+        let borderRect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+        context.stroke(borderRect)
+
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage!
+    }
+
 }
+
 
 

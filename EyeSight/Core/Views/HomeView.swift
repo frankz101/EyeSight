@@ -9,15 +9,17 @@ import SwiftUI
 
 struct HomeView: View {
     @EnvironmentObject var viewModel: AuthService
+    @ObservedObject var profileViewModel: ProfileViewModel
     @ObservedObject var userLocationViewModel: UserLocationViewModel
 
         init() {
             self.userLocationViewModel = UserLocationViewModel(locationManager: LocationManager())
+            self.profileViewModel = ProfileViewModel()
         }
     var body: some View {
         Group {
             if viewModel.userSession != nil {
-                TabBarView(userLocationViewModel: userLocationViewModel)
+                TabBarView(userLocationViewModel: userLocationViewModel, profileViewModel: profileViewModel)
             } else {
                 LoginView()
             }

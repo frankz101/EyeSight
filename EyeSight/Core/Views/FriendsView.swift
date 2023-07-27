@@ -11,11 +11,11 @@ struct FriendsView: View {
     @EnvironmentObject var viewModel: AuthService
       var body: some View {
           UserListView()
-        Button {
-              viewModel.signout()
-          } label: {
-              Text("Sign Out")
-          }
+//        Button {
+//              viewModel.signout()
+//          } label: {
+//              Text("Sign Out")
+//          }
       }
 }
 

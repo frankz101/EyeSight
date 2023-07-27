@@ -68,19 +68,23 @@ struct PostMapView: View {
                         commentViewModel.isShowingCommentSection = true
                     }) {
                         Text("View Comments")
-                            .padding()
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(8)
+                            .foregroundColor(.gray)
+                            .font(.subheadline)
                     }
-                    .padding()
                     .sheet(isPresented: $commentViewModel.isShowingCommentSection) {
                         CommentSectionView(viewModel: commentViewModel, commentSectionID: commentSectionID)
+                            .presentationDetents([.medium,.large])
                     }
                 }
             }
             .onAppear {
                 viewModel.fetchPost(postId: postId)
+                if let commentSectionID = viewModel.post?.commentSectionID {
+                    commentViewModel.startListening(commentSectionID: commentSectionID)
+                }
+            }
+            .onDisappear {
+                commentViewModel.stopListening()
             }
         }
     }

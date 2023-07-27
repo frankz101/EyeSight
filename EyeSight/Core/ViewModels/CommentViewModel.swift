@@ -12,7 +12,9 @@ import Firebase
 class CommentViewModel: ObservableObject {
     @Published var comments = [Comment]()
     @Published var isShowingCommentSection = false
-    
+
+    private var listener: ListenerRegistration?  // Hold reference to the listener
+
     func addComment(commentSectionID: String, senderID: String, text: String) async {
         do {
             let newComment = Comment(id: UUID().uuidString, commentSectionID: commentSectionID, senderID: senderID, timestamp: Timestamp(), text: text)
@@ -35,4 +37,23 @@ class CommentViewModel: ObservableObject {
             print("Failed to fetch comments with error \(error.localizedDescription)")
         }
     }
+
+    func startListening(commentSectionID: String) {
+        let query = Firestore.firestore().collection("commentSections").document(commentSectionID).collection("comments")
+        listener = query.addSnapshotListener { querySnapshot, error in
+            if let error = error {
+                print("Error getting documents: \(error)")
+            } else {
+                self.comments = querySnapshot?.documents.compactMap { doc in
+                    try? Firestore.Decoder().decode(Comment.self, from: doc.data())
+                } ?? []
+                print("Fetched \(self.comments.count) comments")
+            }
+        }
+    }
+
+    func stopListening() {
+        listener?.remove() // Don't forget to detach the listener when you're done
+    }
 }
+

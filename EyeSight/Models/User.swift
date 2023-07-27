@@ -14,4 +14,5 @@ struct User: Identifiable, Codable  {
     var friends: [String]?
     var hasPostedToday: Bool
     let locationId: String?
+    var profileImageURL: String?
 }

@@ -15,20 +15,35 @@ struct CommentSectionView: View {
 
     var body: some View {
         VStack {
-            TextField("Enter your comment here", text: $commentText)
-                .padding()
-            Button(action: {
-                Task {
-                    await sendComment()
-                }
-            }) {
-                Text("Send Comment")
-            }
             List {
                 ForEach(viewModel.comments, id: \.id) { comment in
                     Text(comment.text)
                 }
             }
+            HStack {
+                TextField("Add a comment", text: $commentText)
+                    .padding(10)
+                    .background(Color(.systemGray6))
+                    .cornerRadius(8)
+
+                Button(action: {
+                    Task {
+                        await sendComment()
+                    }
+                }) {
+                    Text("Post")
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 5)
+                        .background(commentText.trimmingCharacters(in: .whitespaces).isEmpty ? Color.gray : Color.blue)
+                        .cornerRadius(8)
+                }
+                .disabled(commentText.trimmingCharacters(in: .whitespaces).isEmpty)
+
+            }
+            .padding()
+
+
         }
         .task {
             await fetchComments()
@@ -50,6 +65,7 @@ struct CommentSectionView: View {
                 return
             }
             try await viewModel.addComment(commentSectionID: commentSectionID, senderID: currentUserID, text: commentText)
+            commentText = ""
         } catch {
             print("Failed to send comment with error \(error.localizedDescription)")
         }

@@ -12,40 +12,87 @@ import MapKit
 
 class UserCustomAnnotation: MKPointAnnotation {
     let avatarURL: String
-    init(avatarURL: String) {
+    let userName: String
+
+    init(avatarURL: String, userName: String) {
         self.avatarURL = avatarURL
+        self.userName = userName
     }
 }
+
 
 class UserCustomAnnotationView: MKAnnotationView {
     override var annotation: MKAnnotation? {
         willSet {
-            // You don't need the customAnnotation here, so you can remove it.
-            // You can simply use the "image" property of the annotation view to set the image.
-
-            // Set the custom image to the annotation view
-            let circleImage = createCircleImage(color: .gray, diameter: 50)
-            self.image = circleImage
-
-            // Set the image view content mode to center
-            self.contentMode = .center
+            guard let customAnnotation = newValue as? UserCustomAnnotation else { return }
+            
+            if let url = URL(string: customAnnotation.avatarURL), !customAnnotation.avatarURL.isEmpty {
+                KingfisherManager.shared.retrieveImage(with: url) { result in
+                    switch result {
+                    case .success(let value):
+                        let circleImage = self.makeCircularImage(image: value.image, diameter: 50, borderWidth: 2, borderColor: .white)
+                        self.image = circleImage
+                        self.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+                    case .failure(let error):
+                        print("Error: \(error)") // handle the error appropriately
+                    }
+                }
+            } else {
+                
+                let placeholderImage = generatePlaceholderImage(userName: customAnnotation.userName)
+                let circleImage = self.makeCircularImage(image: placeholderImage, diameter: 50, borderWidth: 2, borderColor: .white)
+                self.image = circleImage
+                self.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+            }
         }
     }
 
-    // Function to create a circular image with the given color and diameter
-    private func createCircleImage(color: UIColor, diameter: CGFloat) -> UIImage? {
+    private func generatePlaceholderImage(userName: String) -> UIImage {
+        let firstLetter = String(userName.prefix(1)).uppercased()
+        let label = UILabel()
+        label.text = firstLetter
+        label.textColor = .white
+        label.textAlignment = .center
+        label.backgroundColor = .gray
+        label.layer.cornerRadius = 50 / 2
+        label.layer.masksToBounds = true
+        label.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        
+        UIGraphicsBeginImageContext(label.bounds.size)
+        if let currentContext = UIGraphicsGetCurrentContext() {
+            label.layer.render(in: currentContext)
+            let nameImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            return nameImage ?? UIImage()
+        }
+        return UIImage()
+    }
+    
+    private func makeCircularImage(image: UIImage, diameter: CGFloat, borderWidth: CGFloat, borderColor: UIColor) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: diameter, height: diameter), false, 0)
-        guard let context = UIGraphicsGetCurrentContext() else { return nil }
+        let context = UIGraphicsGetCurrentContext()!
 
-        context.setFillColor(color.cgColor)
-        context.fillEllipse(in: CGRect(x: 0, y: 0, width: diameter, height: diameter))
+        // Draw the image in a circle
+        let imageRect = CGRect(x: borderWidth, y: borderWidth, width: diameter - 2 * borderWidth, height: diameter - 2 * borderWidth)
+        let clipPath = UIBezierPath(ovalIn: imageRect).cgPath
+        context.addPath(clipPath)
+        context.clip()
+        image.draw(in: imageRect)
 
-        let image = UIGraphicsGetImageFromCurrentImageContext()
+        // Draw the border
+        context.setStrokeColor(borderColor.cgColor)
+        context.setLineWidth(borderWidth)
+        context.addPath(clipPath)
+        context.strokePath()
+
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-
-        return image
+        return newImage!
     }
 }
+
+
+
 
 
 

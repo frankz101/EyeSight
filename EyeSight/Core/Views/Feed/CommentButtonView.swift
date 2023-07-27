@@ -17,9 +17,13 @@ struct CommentButtonView: View {
             showCommentSection = true
         }) {
             Text("Add A Comment")
+                .foregroundColor(.gray)
+                .font(.caption)
         }
+        .buttonStyle(.plain)
         .sheet(isPresented: $showCommentSection) {
             CommentSectionView(viewModel: viewModel, commentSectionID: commentSectionID)
+                .presentationDetents([.medium, .large])
         }
     }
 }
