@@ -14,6 +14,12 @@ struct UserListView: View {
     var body: some View {
         ScrollView {
             LazyVStack {
+                ForEach(Array(viewModel.friends.enumerated()), id: \.offset) { index, friend in
+                    if let fullName = friend["fullName"] as? String {
+                        Text(fullName)
+                    }
+                }
+                Spacer()
                 ForEach(viewModel.users) { user in
                     Text(user.fullName)
                     Button(action: {
