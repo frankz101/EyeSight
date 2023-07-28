@@ -17,7 +17,9 @@ class UserListViewModel: ObservableObject {
         Task {
             do {
                 let fetchedFriends = try await fetchFriends()
-                friends = fetchedFriends
+                DispatchQueue.main.async {
+                    self.friends = fetchedFriends
+                }
             } catch {
                 // Handle error here.
                 print("Error fetching friends: \(error)")
