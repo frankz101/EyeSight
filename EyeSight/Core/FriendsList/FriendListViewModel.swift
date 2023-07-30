@@ -21,6 +21,13 @@ class FriendListViewModel: ObservableObject {
 //        setupFriendsLocationsListener()
     }
     
+    
+    
+    
+
+    
+    
+    
     func setupFriendsLocationsListener() {
         guard let currentUserID = Auth.auth().currentUser?.uid else { return }
         let userDocument = Firestore.firestore().collection("users").document(currentUserID)

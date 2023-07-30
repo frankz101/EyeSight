@@ -11,4 +11,5 @@ struct Friend {
     let id: String
     var name: String
     let locationId: String
+    var distance: Double?
 }

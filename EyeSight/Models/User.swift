@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Firebase
 
 struct User: Identifiable, Codable  {
     let id: String
@@ -15,4 +16,6 @@ struct User: Identifiable, Codable  {
     var hasPostedToday: Bool
     let locationId: String?
     var profileImageURL: String?
+    var town: String?
+    var state: String?
 }

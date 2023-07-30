@@ -20,22 +20,19 @@ class ProfileViewModel: ObservableObject {
             print("No user is logged in.")
             return
         }
-        
+
         let docRef = db.collection("users").document(userID)
-        
+
         docRef.getDocument { (document, error) in
             if let document = document, document.exists {
-                do {
-                    let jsonData = try JSONSerialization.data(withJSONObject: document.data() ?? [:])
-                    self.user = try JSONDecoder().decode(User.self, from: jsonData)
-                } catch let error {
-                    print("Error decoding user: \(error)")
-                }
-            } else {
-                print("User document does not exist")
+                let user = try? document.data(as: User.self)
+                self.user = user
+            } else if let error = error {
+                print("Error fetching user: \(error)")
             }
         }
     }
+
     
     func uploadProfileImage(selectedImage: UIImage) {
         guard let userId = Auth.auth().currentUser?.uid else {
