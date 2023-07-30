@@ -21,6 +21,24 @@ struct UserListView: View {
                     .frame(alignment: .leading)
                     .fontWeight(.bold)
                     .font(.system(size: 36))
+                
+                Text("Requests")
+                ForEach(viewModel.friendRequests) { friendRequest in
+                            HStack {
+                                Text(friendRequest.senderId)
+                                Spacer()
+                                Button(action: {
+                                    if let requestId = friendRequest.id {
+                                        viewModel.acceptFriendRequest(requestId: requestId, from: friendRequest.senderId)
+                                    } else {
+                                        print("Request invalid")
+                                    }
+                                }) {
+                                    Text("Accept")
+                                }
+                            }
+                        }
+                
                 TextField("Search", text: $query)
                     .autocapitalization(.none)
                     .onChange(of: query, perform: { value in
@@ -67,19 +85,15 @@ struct UserListView: View {
                                         Button(action: {
                                             // Call function to add friend
                                             if let currentUserID = Auth.auth().currentUser?.uid {
-                                                Task {
-                                                    do {
-                                                        try await viewModel.addFriend(userID: currentUserID, friendID: user.id)
-                                                    } catch {
-                                                        print("Error removing friend: \(error)")
-                                                    }
-                                                }
+                                                viewModel.sendFriendRequest(userId: currentUserID, to: user.id)
                                             }
                                             
                                         }) {
                                             Text("Add Friend")
                                         }
                                     }
+                            
+                            
 //                            Button(action: {
 //                                viewModel.currentUser.uid {
 //                                    Task {
@@ -94,9 +108,12 @@ struct UserListView: View {
 //                                Label("Add Friend", systemImage: "person.badge.plus")
 //                            }
                         }
+                        
                     }
                     .padding(5)
+                
                 }
+                
 //                ForEach(viewModel.users) { user in
 //                    Text(user.fullName)
 //                    Button(action: {
@@ -114,8 +131,10 @@ struct UserListView: View {
 //                    }
 //                }
             }
+            
         }
         .padding(.horizontal, 20)
+        
     }
 }
 
