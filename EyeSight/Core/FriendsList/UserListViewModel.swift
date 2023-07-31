@@ -9,10 +9,17 @@ import Foundation
 import SwiftUI
 import Firebase
 
+struct FriendRequestViewData: Identifiable {
+    let id = UUID()
+    let friendRequest: FriendRequest
+    let user: User
+}
+
 class UserListViewModel: ObservableObject {
     @Published var users = [User]()
     @ObservedObject var friendsViewModel = FriendsViewModel()
     @Published var friendRequests: [FriendRequest] = []
+    @Published var friendRequestsViewData = [FriendRequestViewData]()
     
     init() {
         getFriendRequests()
@@ -145,6 +152,26 @@ class UserListViewModel: ObservableObject {
         
     }
     
+    func rejectFriendRequest(requestId: String, from senderId: String) {
+        if let currentUserId = Auth.auth().currentUser?.uid {
+            let currentUserDoc = Firestore.firestore().collection("users").document(currentUserId)
+            let senderUserDoc = Firestore.firestore().collection("users").document(senderId)
+            
+            // Delete the friend request
+            Firestore.firestore().collection("friendRequests").document(requestId).delete() { err in
+                if let err = err {
+                    print("Error removing document: \(err)")
+                } else {
+                    print("Document successfully removed!")
+                }
+            }
+        } else {
+            print("No user")
+        }
+        
+        
+    }
+    
     func getFriendRequests() {
             // TODO: Replace with your current user's id
         if let currentUserId = Auth.auth().currentUser?.uid {
@@ -153,9 +180,37 @@ class UserListViewModel: ObservableObject {
                     if let err = err {
                         print("Error getting documents: \(err)")
                     } else {
-                        self.friendRequests = querySnapshot?.documents.compactMap { document in
-                            try? document.data(as: FriendRequest.self)
-                        } ?? []
+//                        self.friendRequests = querySnapshot?.documents.compactMap { document in
+//                            try? document.data(as: FriendRequest.self)
+//                        } ?? []
+                        querySnapshot?.documents.forEach { docSnapshot in
+                            let friendRequestId = docSnapshot.documentID
+                            let data = docSnapshot.data()
+                            let senderId = data["senderId"] as? String ?? ""
+                            
+                            Firestore.firestore().collection("users").document(senderId).getDocument { (userDocSnapshot, userErr) in
+                                if let userErr = userErr {
+                                    print("Error getting user data: \(userErr)")
+                                } else {
+                                    if let userData = userDocSnapshot?.data() {
+                                        let user = User(id: userData["id"] as? String ?? "",
+                                                        fullName: userData["fullName"] as? String ?? "",
+                                                        email: userData["email"] as? String ?? "",
+                                                        friends: userData["friends"] as? [String],
+                                                        hasPostedToday: userData["hasPostedToday"] as? Bool ?? false,
+                                                        locationId: userData["locationId"] as? String,
+                                                        profileImageURL: userData["profileImageURL"] as? String,
+                                                        town: userData["town"] as? String,
+                                                        state: userData["state"] as? String)
+                                        
+                                        let friendRequest = FriendRequest(id: friendRequestId, senderId: senderId, receiverId: currentUserId)
+                                        let friendRequestViewData = FriendRequestViewData(friendRequest: friendRequest, user: user)
+                                        self.friendRequestsViewData.append(friendRequestViewData)
+                                    }
+                                }
+                            }
+                        }
+
                     }
                 }
             

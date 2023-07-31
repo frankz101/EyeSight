@@ -23,21 +23,60 @@ struct UserListView: View {
                     .font(.system(size: 36))
                 
                 Text("Requests")
-                ForEach(viewModel.friendRequests) { friendRequest in
+//                ForEach(viewModel.friendRequests) { friendRequest in
+//                            HStack {
+//                                Text(friendRequest.senderId)
+//                                Spacer()
+//                                Button(action: {
+//                                    if let requestId = friendRequest.id {
+//                                        viewModel.acceptFriendRequest(requestId: requestId, from: friendRequest.senderId)
+//                                    } else {
+//                                        print("Request invalid")
+//                                    }
+//                                }) {
+//                                    Text("Accept")
+//                                }
+//                            }
+//                        }
+                ForEach(viewModel.friendRequestsViewData) { user in
+                    HStack {
+                        if let url = URL(string: user.user.profileImageURL ?? "") {
+                            KFImage(url)
+                                .resizable()
+                                .frame(width: 50, height: 50)
+                                .clipShape(Circle())
+                        }
+                        VStack(alignment: .leading) {
+                            Text(user.user.fullName)
+                                .font(.headline)
                             HStack {
-                                Text(friendRequest.senderId)
-                                Spacer()
-                                Button(action: {
-                                    if let requestId = friendRequest.id {
-                                        viewModel.acceptFriendRequest(requestId: requestId, from: friendRequest.senderId)
-                                    } else {
-                                        print("Request invalid")
-                                    }
-                                }) {
-                                    Text("Accept")
-                                }
+                                Text("\(user.user.town ?? "Unknown state")")
+                                    .fontWeight(.light)
+                                Text("\(user.user.state ?? "Unknown state")")
+                                    .fontWeight(.light)
                             }
                         }
+                        Spacer()
+                        Button(action: {
+                            if let requestId = user.friendRequest.id {
+                                viewModel.rejectFriendRequest(requestId: requestId, from: user.friendRequest.senderId)
+                            } else {
+                                print("Request invalid")
+                            }
+                        }) {
+                            Text("Reject")
+                        }
+                        Button(action: {
+                            if let requestId = user.friendRequest.id {
+                                viewModel.acceptFriendRequest(requestId: requestId, from: user.friendRequest.senderId)
+                            } else {
+                                print("Request invalid")
+                            }
+                        }) {
+                            Text("Accept")
+                        }
+                    }
+                }
                 
                 TextField("Search", text: $query)
                     .autocapitalization(.none)
