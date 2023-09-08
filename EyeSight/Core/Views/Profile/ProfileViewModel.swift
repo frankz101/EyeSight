@@ -12,6 +12,41 @@ import FirebaseStorage
 
 class ProfileViewModel: ObservableObject {
     @Published var user: User?
+    @Published var recentPostId: String?
+    @Published var hasPostedToday: Bool = false
+
+    func fetchRecentPost() {
+        guard let userID = Auth.auth().currentUser?.uid else {
+            print("No user is logged in.")
+            return
+        }
+
+        let startOfToday = Calendar.current.startOfDay(for: Date())
+        let endTime = Date()
+        let postsRef = db.collection("posts")
+                         .whereField("userID", isEqualTo: userID)
+                         .whereField("timestamp", isGreaterThanOrEqualTo: startOfToday)
+                         .whereField("timestamp", isLessThanOrEqualTo: endTime)
+                         .order(by: "timestamp", descending: true)
+                         .limit(to: 1)
+        
+        postsRef.getDocuments { (snapshot, error) in
+            if let error = error {
+                print("Error fetching post: \(error)")
+                return
+            }
+
+            guard let documents = snapshot?.documents, !documents.isEmpty else {
+                print("No recent posts found.")
+                return
+            }
+
+            // Save the documentID (which is the postId) to the recentPostId property
+            self.recentPostId = documents[0].documentID
+        }
+    }
+
+
     
     let db = Firestore.firestore()
     
@@ -27,11 +62,13 @@ class ProfileViewModel: ObservableObject {
             if let document = document, document.exists {
                 let user = try? document.data(as: User.self)
                 self.user = user
+                self.hasPostedToday = user?.hasPostedToday ?? false
             } else if let error = error {
                 print("Error fetching user: \(error)")
             }
         }
     }
+
 
     
     func uploadProfileImage(selectedImage: UIImage) {

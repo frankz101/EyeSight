@@ -27,7 +27,7 @@ enum ActiveSheet: Identifiable {
 
 struct MapWithCameraButtonView: View {
     @State private var selectedPostId: IdentifiablePostId? = nil
-    @State private var isShowingFirstSheet = true
+    @State private var isShowingDetailSheet = false
     @ObservedObject var userLocationViewModel: UserLocationViewModel
     @ObservedObject var friendsViewModel: FriendsViewModel
     @ObservedObject var viewModel: ProfileViewModel
@@ -36,27 +36,84 @@ struct MapWithCameraButtonView: View {
         ZStack {
             MapViewRepresentable(userLocationViewModel: userLocationViewModel, onAnnotationTapped: { postId in
                 selectedPostId = IdentifiablePostId(id: postId, postId: postId)
-                isShowingFirstSheet = false
             })
-            .sheet(isPresented: $isShowingFirstSheet, onDismiss: {
-                if selectedPostId == nil {
-                    isShowingFirstSheet = true
+            .edgesIgnoringSafeArea(.top)
+            
+            VStack {
+                HStack {
+                    if isShowingDetailSheet {
+                        Button(action: {
+                            isShowingDetailSheet = false
+                        }) {
+                            Text("Close Details")
+                                .padding()
+                                .background(Color.white)
+                                .cornerRadius(8)
+                                .shadow(radius: 4)
+                        }
+                        Spacer() // Pushes the next button to the right when "Close Details" is shown
+                    }
+                    
+                    if !isShowingDetailSheet {
+                        Spacer() // Pushes the "Show Details" button to the right
+                        Button(action: {
+                            isShowingDetailSheet = true
+                        }) {
+                            Text("Show Details")
+                                .padding()
+                                .background(Color.white)
+                                .cornerRadius(8)
+                                .shadow(radius: 4)
+                        }
+                    }
                 }
-            }) {
-                FriendDetailSheetView(friendsViewModel: friendsViewModel, viewModel: viewModel)
-                    .presentationDetents([.fraction(0.1),.medium,.large])
-                    .presentationBackgroundInteraction(.enabled(upThrough: .medium))
+                Spacer() // Pushes the HStack to the top
             }
-            .sheet(item: $selectedPostId, onDismiss: {
-                print("Sheet dismissed")
-                isShowingFirstSheet = true
-                selectedPostId = nil
-            }) { identifiablePostId in
-                PostMapView(postId: identifiablePostId.postId)
-                    .presentationDetents([.medium, .large])
-                    .presentationBackgroundInteraction(.enabled(upThrough: .medium))
-            }
+            .padding()
         }
+        .sheet(isPresented: $isShowingDetailSheet) {
+            FriendDetailSheetView(friendsViewModel: friendsViewModel, viewModel: viewModel)
+                .presentationDetents([.medium,.large])
+                .presentationBackgroundInteraction(.enabled(upThrough: .medium))
+        }
+
+
+
+
+
+//struct MapWithCameraButtonView: View {
+//    @State private var selectedPostId: IdentifiablePostId? = nil
+//    @State private var isShowingFirstSheet = true
+//    @ObservedObject var userLocationViewModel: UserLocationViewModel
+//    @ObservedObject var friendsViewModel: FriendsViewModel
+//    @ObservedObject var viewModel: ProfileViewModel
+//
+//    var body: some View {
+//        ZStack {
+//            MapViewRepresentable(userLocationViewModel: userLocationViewModel, onAnnotationTapped: { postId in
+//                selectedPostId = IdentifiablePostId(id: postId, postId: postId)
+//                isShowingFirstSheet = false
+//            })
+//            .edgesIgnoringSafeArea(.top)
+//            .sheet(isPresented: $isShowingFirstSheet, onDismiss: {
+//                if selectedPostId == nil {
+//                    isShowingFirstSheet = true
+//                }
+//            }) {
+//                FriendDetailSheetView(friendsViewModel: friendsViewModel, viewModel: viewModel)
+//                    .presentationDetents([.fraction(0.1),.medium,.large])
+//                    .presentationBackgroundInteraction(.enabled(upThrough: .medium))
+//            }
+//            .sheet(item: $selectedPostId, onDismiss: {
+//                print("Sheet dismissed")
+//                isShowingFirstSheet = true
+//                selectedPostId = nil
+//            }) { identifiablePostId in
+//                PostMapView(postId: identifiablePostId.postId)
+//                    .presentationDetents([.medium, .large])
+//                    .presentationBackgroundInteraction(.enabled(upThrough: .medium))
+//            }
+        
     }
 }
 
@@ -120,4 +177,3 @@ struct MapWithCameraButtonView: View {
 //            .environment(\.locationManager, locationManager) // Pass the locationManager as an environment value
 //    }
 //}
-

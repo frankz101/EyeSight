@@ -55,7 +55,6 @@ struct FriendDetailSheetView: View {
                 }
             }
         }
-        .interactiveDismissDisabled()
     }
 }
 

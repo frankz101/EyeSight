@@ -21,8 +21,7 @@ struct HomeView: View {
     var body: some View {
         Group {
             if viewModel.userSession != nil {
-                MapWithCameraButtonView(userLocationViewModel: userLocationViewModel, friendsViewModel: friendsViewModel, viewModel: profileViewModel)
-                    .ignoresSafeArea()
+                TabBarView(userLocationViewModel: userLocationViewModel, profileViewModel: profileViewModel, friendsViewModel: friendsViewModel)
             } else {
                 LoginView()
             }

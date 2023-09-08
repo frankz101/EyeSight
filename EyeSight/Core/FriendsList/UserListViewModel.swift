@@ -23,25 +23,8 @@ class UserListViewModel: ObservableObject {
     
     init() {
         getFriendRequests()
-//        Task { try await fetchAllUsers() }
-//        Task {
-//            do {
-//                let fetchedFriends = try await fetchFriends()
-//                DispatchQueue.main.async {
-//                    self.friends = fetchedFriends
-//                }
-//            } catch {
-//                // Handle error here.
-//                print("Error fetching friends: \(error)")
-//            }
-//        }
-
+        setupFriendRequestsListener()
     }
-//    @MainActor
-//    func fetchAllUsers() async throws {
-//        let fetchedUsers = try await UserService.fetchAllUsers()
-//        users = fetchedUsers
-//    }
     
     func searchUsers(text: String) {
             // Clear the current array
@@ -108,6 +91,46 @@ class UserListViewModel: ObservableObject {
         return friendsViewModel.friends.contains(where: { $0.id == userId })
     }
     
+    func updateFriendRequestsViewData() {
+        // Assuming User has a property 'id' to identify them uniquely
+        // Adjust the properties according to your actual data model
+        let userDictionary = Dictionary(uniqueKeysWithValues: users.map { ($0.id, $0) })
+        
+        friendRequestsViewData = friendRequests.compactMap { friendRequest in
+            guard let user = userDictionary[friendRequest.senderId] else {
+                return nil
+            }
+            return FriendRequestViewData(friendRequest: friendRequest, user: user)
+        }
+    }
+    
+    func setupFriendRequestsListener() {
+            guard let currentUserId = Auth.auth().currentUser?.uid else {
+                print("No user")
+                return
+            }
+
+            Firestore.firestore().collection("friendRequests").whereField("receiverId", isEqualTo: currentUserId).addSnapshotListener { (snapshot, error) in
+                if let error = error {
+                    print("Error listening for friend request updates: \(error)")
+                    return
+                }
+
+                guard let snapshot = snapshot else {
+                    print("No snapshot data")
+                    return
+                }
+
+                // Assuming FriendRequest is a struct or class that can be initialized with a Firestore document
+                self.friendRequests = snapshot.documents.compactMap { document in
+                    return try? document.data(as: FriendRequest.self)
+                }
+
+                // Update friendRequestsViewData after updating friendRequests
+                        self.updateFriendRequestsViewData()
+            }
+        }
+    
     // MARK: - Send Friend Request
     func sendFriendRequest(userId: String, to friendId: String) {
         let friendRequest = Firestore.firestore().collection("friendRequests").document()
@@ -145,6 +168,7 @@ class UserListViewModel: ObservableObject {
                     print("Document successfully removed!")
                 }
             }
+            getFriendRequests()
         } else {
             print("No user")
         }
@@ -154,8 +178,6 @@ class UserListViewModel: ObservableObject {
     
     func rejectFriendRequest(requestId: String, from senderId: String) {
         if let currentUserId = Auth.auth().currentUser?.uid {
-            let currentUserDoc = Firestore.firestore().collection("users").document(currentUserId)
-            let senderUserDoc = Firestore.firestore().collection("users").document(senderId)
             
             // Delete the friend request
             Firestore.firestore().collection("friendRequests").document(requestId).delete() { err in
@@ -165,6 +187,7 @@ class UserListViewModel: ObservableObject {
                     print("Document successfully removed!")
                 }
             }
+            getFriendRequests()
         } else {
             print("No user")
         }

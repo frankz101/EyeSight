@@ -15,44 +15,96 @@ struct TabBarView: View {
     @State private var selectedTab = 1 // Set the index of MapViewRepresentable tab
     @State private var isActiveTab: Bool = false
     
+    let gradient = LinearGradient(colors: [.orange, .green],
+                                  startPoint: .topLeading,
+                                  endPoint: .bottomTrailing)
     var body: some View {
-        TabView(selection: $selectedTab) {
-            FeedView()
-                .tabItem{
-                    Label("Feed", systemImage: "house.fill")
-                }
-                .tag(0)
-
-            MapWithCameraButtonView(userLocationViewModel: userLocationViewModel, friendsViewModel: friendsViewModel, viewModel: profileViewModel)
-                .ignoresSafeArea()
-                .tabItem{
-                    Label("Home",  systemImage:"location.fill")
-                }
-                .tag(1)
-                    
-            CameraTestView {
-                self.selectedTab = 0
+        TabView (selection: $selectedTab) {
+            ZStack {
+                gradient
+                    .opacity(0.25)
+                    .ignoresSafeArea()
+                
+                FriendsView()
+            }
+            .tabItem{
+                Label("Friends", systemImage: "house.fill")
+            }
+            .tag(0)
+            
+            ZStack {
+                gradient
+                    .opacity(0.25)
+                    .ignoresSafeArea()
+                
+                MapWithCameraButtonView(userLocationViewModel: userLocationViewModel, friendsViewModel: friendsViewModel, viewModel: profileViewModel)
+            }
+            .tabItem{
+                Label("Home",  systemImage:"location.fill")
+            }
+            .tag(1)
+            
+            ZStack {
+                gradient
+                    .opacity(0.25)
+                    .ignoresSafeArea()
+                
+                ProfileView(viewModel: profileViewModel)
             }
             .tabItem {
-                Label("Camera", systemImage:"camera.fill")
+                Label("Profile", systemImage: "person.crop.circle.fill")
             }
             .tag(2)
-
-            FriendsView()
-                .tabItem {
-                    Label("Friends", systemImage:"person.fill")
-                }
-                .tag(3)
-
-            ProfileView(viewModel: profileViewModel)
-                .tabItem {
-                    Label("Profile", systemImage: "person.crop.circle.fill")
-                }
-                .tag(4)
+            
+            
+                                
+            
+    
+//    let gradient = LinearGradient(colors: [.blue.opacity(0.3), .green.opacity(0.5)],
+//                                  startPoint: .topLeading,
+//                                  endPoint: .bottomTrailing)
+//
+//    var body: some View {
+//        ZStack {
+//            gradient.ignoresSafeArea()
+//            TabView(selection: $selectedTab) {
+//                FeedView()
+//                    .tabItem{
+//                        Label("Feed", systemImage: "house.fill")
+//                    }
+//                    .tag(0)
+//
+//                MapWithCameraButtonView(userLocationViewModel: userLocationViewModel, friendsViewModel: friendsViewModel, viewModel: profileViewModel)
+//                    .tabItem{
+//                        Label("Home",  systemImage:"location.fill")
+//                    }
+//                    .tag(1)
+//
+//                CameraTestView {
+//                    self.selectedTab = 0
+//                }
+//                .tabItem {
+//                    Label("Camera", systemImage:"camera.fill")
+//                }
+//                .tag(2)
+//
+//                FriendsView()
+//                    .tabItem {
+//                        Label("Friends", systemImage:"person.fill")
+//                    }
+//                    .tag(3)
+//
+//                ProfileView(viewModel: profileViewModel)
+//                    .tabItem {
+//                        Label("Profile", systemImage: "person.crop.circle.fill")
+//                    }
+//                    .tag(4)
+//            }
+//            .background(Color.clear)
         }
-
     }
 }
+
 
 
 
