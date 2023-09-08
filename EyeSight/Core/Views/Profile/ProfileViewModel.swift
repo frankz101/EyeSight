@@ -14,6 +14,51 @@ class ProfileViewModel: ObservableObject {
     @Published var user: User?
     @Published var recentPostId: String?
     @Published var hasPostedToday: Bool = false
+    
+    
+    var recentPostListener: ListenerRegistration?
+    var userListener: ListenerRegistration?
+
+    init() {
+        // Other initializations
+        startListeningToUser()
+    }
+
+
+    func startListeningToUser() {
+        guard let userID = Auth.auth().currentUser?.uid else {
+            print("No user is logged in.")
+            return
+        }
+
+        let userRef = Firestore.firestore().collection("users").document(userID)
+
+        userListener = userRef.addSnapshotListener { [weak self] snapshot, error in
+            if let error = error {
+                print("Error fetching user data: \(error)")
+                return
+            }
+
+            guard let snapshot = snapshot else {
+                print("User document is nil")
+                return
+            }
+
+            guard let data = snapshot.data() else {
+                print("User data is nil")
+                return
+            }
+
+            // Replace 'hasPostedToday' with the actual field name in your Firestore user document
+            if let hasPostedToday = data["hasPostedToday"] as? Bool, hasPostedToday {
+                self?.fetchRecentPost()
+            }
+        }
+    }
+
+    deinit {
+        userListener?.remove()
+    }
 
     func fetchRecentPost() {
         guard let userID = Auth.auth().currentUser?.uid else {

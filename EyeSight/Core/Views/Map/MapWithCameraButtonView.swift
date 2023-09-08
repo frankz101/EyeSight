@@ -37,7 +37,9 @@ struct MapWithCameraButtonView: View {
             MapViewRepresentable(userLocationViewModel: userLocationViewModel, onAnnotationTapped: { postId in
                 selectedPostId = IdentifiablePostId(id: postId, postId: postId)
             })
-            .edgesIgnoringSafeArea(.top)
+            .ignoresSafeArea()
+                        .padding(.bottom, 0.2)
+            //            .edgesIgnoringSafeArea(.top)
             
             VStack {
                 HStack {

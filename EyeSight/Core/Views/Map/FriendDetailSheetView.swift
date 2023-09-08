@@ -20,16 +20,11 @@ struct FriendDetailSheetView: View {
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .padding()
+                    
                     Spacer()
-                    NavigationLink(destination: ProfileView(viewModel: viewModel)) {
-                        Image(systemName: "person.circle")
-                            .resizable()
-                            .frame(width: 50, height: 50)
-                            .foregroundStyle(.black)
-                            .padding([.trailing], 12)
-                    }
                     
                 }
+                Divider()
                 List(friendsViewModel.friends, id: \.id) { friend in
                     VStack(alignment: .leading) {
                         HStack {
@@ -53,6 +48,9 @@ struct FriendDetailSheetView: View {
                     }
                     .padding(5)
                 }
+                .scrollContentBackground(.hidden)
+                .background(Color.white.edgesIgnoringSafeArea(.all))
+
             }
         }
     }

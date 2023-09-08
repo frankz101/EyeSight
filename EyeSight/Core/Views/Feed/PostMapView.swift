@@ -19,10 +19,17 @@ struct PostMapView: View {
         GeometryReader { geometry in
             VStack {
                 HStack {
-                    Image(systemName: "person")
-                        .resizable()
-                        .frame(width: 30, height: 30)
-                        .cornerRadius(50)
+                    if let urlString = viewModel.user?.profileImageURL, let url = URL(string: urlString) {
+                        KFImage(url)
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                            .cornerRadius(50)
+                    } else {
+                        Image(systemName: "person")
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                            .cornerRadius(50)
+                    }
                     VStack (alignment: .leading){
                         Text(viewModel.post?.username ?? "Loading")
                             .font(.caption)
@@ -79,6 +86,7 @@ struct PostMapView: View {
             }
             .onAppear {
                 viewModel.fetchPost(postId: postId)
+                viewModel.fetchUser()
                 if let commentSectionID = viewModel.post?.commentSectionID {
                     commentViewModel.startListening(commentSectionID: commentSectionID)
                 }

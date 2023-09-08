@@ -21,13 +21,6 @@ class FriendListViewModel: ObservableObject {
 //        setupFriendsLocationsListener()
     }
     
-    
-    
-    
-
-    
-    
-    
     func setupFriendsLocationsListener() {
         guard let currentUserID = Auth.auth().currentUser?.uid else { return }
         let userDocument = Firestore.firestore().collection("users").document(currentUserID)
@@ -93,7 +86,6 @@ class FriendListViewModel: ObservableObject {
             if let document = document, document.exists {
                 let avatarURL = document.data()?["profileImageURL"] as? String ?? ""
                 if let userName = document.data()?["fullName"] as? String {
-                    print("zippy")
                     completion((avatarURL, userName))
                 }
             }
@@ -182,7 +174,6 @@ class FriendListViewModel: ObservableObject {
                 
                 
                 if let post = try? document.data(as: Post.self) {
-                    print("heyyy")
                     let latitude = post.location.latitude
                     let longitude = post.location.longitude
                     // Add the post's location to the map
@@ -200,8 +191,6 @@ class FriendListViewModel: ObservableObject {
     
     func addPostLocationToMap(postID: String, latitude: Double, longitude: Double, imageUrl: String?, postId: String) {
         // Remove old annotation if it exists
-        
-        print("whatsup")
         
         if let oldAnnotation = postAnnotations[postID] {
             mapView?.removeAnnotation(oldAnnotation)

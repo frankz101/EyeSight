@@ -14,6 +14,9 @@ import FirebaseFirestoreSwift
 class FeedViewModel: ObservableObject {
     
     @Published var post: Post?
+    @Published var user: User?
+    
+    var userProfileListener: ListenerRegistration?
     
     
     @Published var posts = [Post]()
@@ -38,9 +41,34 @@ class FeedViewModel: ObservableObject {
         generateFeedForUser()
     }
     
+    
+    
+    func fetchUser() {
+        guard let userID = Auth.auth().currentUser?.uid else {
+            print("No user is logged in.")
+            return
+        }
+        
+        let docRef = Firestore.firestore().collection("users").document(userID)
+        
+        userProfileListener = docRef.addSnapshotListener { (documentSnapshot, error) in
+            if let document = documentSnapshot, document.exists {
+                let user = try? document.data(as: User.self)
+                DispatchQueue.main.async {
+                    self.user = user
+                    self.hasPostedToday = user?.hasPostedToday ?? false
+                }
+            } else if let error = error {
+                print("Error fetching user: \(error)")
+            }
+        }
+    }
+    
     func fetchPost(postId: String) {
-        db.collection("posts").document(postId).getDocument { [weak self] (document, error) in
-            if let document = document, document.exists {
+        let docRef = Firestore.firestore().collection("posts").document(postId)
+
+        docRef.getDocument { [weak self] (documentSnapshot, error) in
+            if let document = documentSnapshot, document.exists {
                 do {
                     let post = try document.data(as: Post.self)
                     DispatchQueue.main.async {
@@ -55,6 +83,10 @@ class FeedViewModel: ObservableObject {
         }
     }
 
+    
+    deinit {
+        userListener?.remove()
+    }
     private func generateFeedForUser() {
         // get the current user
         guard let user = Auth.auth().currentUser else {
@@ -129,4 +161,3 @@ class FeedViewModel: ObservableObject {
         generateFeedForUser()
     }
 }
-

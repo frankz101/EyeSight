@@ -21,9 +21,6 @@ struct TabBarView: View {
     var body: some View {
         TabView (selection: $selectedTab) {
             ZStack {
-                gradient
-                    .opacity(0.25)
-                    .ignoresSafeArea()
                 
                 FriendsView()
             }
@@ -33,9 +30,6 @@ struct TabBarView: View {
             .tag(0)
             
             ZStack {
-                gradient
-                    .opacity(0.25)
-                    .ignoresSafeArea()
                 
                 MapWithCameraButtonView(userLocationViewModel: userLocationViewModel, friendsViewModel: friendsViewModel, viewModel: profileViewModel)
             }
@@ -45,9 +39,6 @@ struct TabBarView: View {
             .tag(1)
             
             ZStack {
-                gradient
-                    .opacity(0.25)
-                    .ignoresSafeArea()
                 
                 ProfileView(viewModel: profileViewModel)
             }
@@ -58,7 +49,6 @@ struct TabBarView: View {
             
             
                                 
-            
     
 //    let gradient = LinearGradient(colors: [.blue.opacity(0.3), .green.opacity(0.5)],
 //                                  startPoint: .topLeading,
