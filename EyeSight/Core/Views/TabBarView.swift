@@ -21,8 +21,7 @@ struct TabBarView: View {
     var body: some View {
         TabView (selection: $selectedTab) {
             ZStack {
-                
-                FriendsView()
+                FriendsPageView()
             }
             .tabItem{
                 Label("Friends", systemImage: "house.fill")

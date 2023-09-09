@@ -15,7 +15,7 @@ struct FriendRequestViewData: Identifiable {
     let user: User
 }
 
-class UserListViewModel: ObservableObject {
+class FriendsPageViewModel: ObservableObject {
     @Published var users = [User]()
     @ObservedObject var friendsViewModel = FriendsViewModel()
     @Published var friendRequests: [FriendRequest] = []

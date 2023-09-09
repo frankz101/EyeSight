@@ -9,19 +9,23 @@ import SwiftUI
 import Firebase
 import Kingfisher
 
-enum ContentView: String, CaseIterable {
-    case search = "Search"
-    case friends = "Friends"
-    case requests = "Requests"
-}
-
-struct UserListView: View {
-    @State private var currentView: ContentView = .search
+struct FriendsPageView: View {
+    enum Section: String, CaseIterable {
+        case search
+        case friends
+        case requests
+    }
     
+    @State private var currentView: Section = .search
+    @State private var bubblePosition: CGFloat = 0
+    
+    @StateObject var viewModel = FriendsPageViewModel()
+    @StateObject var friendsViewModel = FriendsViewModel()
+
     var body: some View {
         VStack {
             VStack(alignment: .leading) {
-                Text("EyeSight")
+                Text("friends")
                     .fontWeight(.bold)
                     .font(.system(size: 24))
                     .padding(.horizontal, 20)
@@ -31,7 +35,7 @@ struct UserListView: View {
             case .search:
                 SearchFriendsView()
             case .friends:
-                FriendListView()
+                FriendsListView(friendsViewModel: friendsViewModel)
             case .requests:
                 FriendRequestsView()
             }
@@ -39,55 +43,57 @@ struct UserListView: View {
             Spacer()
 
             HStack(spacing: 10) {
-                Button(action: {
-                    currentView = .search
-                }) {
-                    Text("Search")
-                        .font(.system(size: 15))
-                        .padding(7)
-                        .background(currentView == .search ? Color.gray: Color(UIColor.lightGray))
-                        .foregroundColor(.white)
-                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                    ForEach(Section.allCases, id: \.self) { section in
+                        Button(action: {
+                            withAnimation {
+                                currentView = section
+                                bubblePosition = calculateBubblePosition(section: section)
+                            }
+                        }) {
+                            Text(section.rawValue)
+                                .font(.system(size: 16))
+                                .foregroundColor(currentView == section ? Color.black: Color(UIColor.lightGray))
+                        }
+                        .padding()
+                        .background(
+                            Color.clear
+                                .onAppear {
+                                    if section == currentView {
+                                        bubblePosition = calculateBubblePosition(section: section)
+                                    }
+                                }
+                        )
+                    }
                 }
-                
-                Button(action: {
-                    currentView = .friends
-                }) {
-                    Text("Friends")
-                        .font(.system(size: 15))
-                        .padding(7)
-                        .background(currentView == .friends ? Color.gray: Color(UIColor.lightGray))
-                        .foregroundColor(.white)
-                        .clipShape(RoundedRectangle(cornerRadius: 20))
-                }
+                .padding(7)
 
-                Button(action: {
-                    currentView = .requests
-                }) {
-                    Text("Requests")
-                        .font(.system(size: 15))
-                        .padding(7)
-                        .background(currentView == .requests ? Color.gray : Color(UIColor.lightGray))
-                        .foregroundColor(.white)
-                        .clipShape(RoundedRectangle(cornerRadius: 20))
-                }
-            }
-            .padding(7)
-            .background(Color(UIColor.lightGray))
-            .cornerRadius(20)
-            .frame(maxWidth: .infinity)
-            
-            Spacer()
-                .frame(height: 20)
+                RoundedRectangle(cornerRadius: 20)
+                    .opacity(0.1)
+                    .frame(width: 80, height: 40)
+                    .offset(x: bubblePosition, y: -60)
+                    .animation(Animation.spring(), value: bubblePosition)
         }
         .padding()
+        .padding(.bottom, 0)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+
+    }
+    func calculateBubblePosition(section: Section) -> CGFloat {
+        switch section {
+        case .search:
+            return -100
+        case .friends:
+            return -8
+        case .requests:
+            return 91
+        }
     }
 }
 
 struct SearchFriendsView: View {
     @State private var query = ""
-    @StateObject var viewModel = UserListViewModel()
+    @StateObject var viewModel = FriendsPageViewModel()
     
     var body: some View {
         TextField("Search Friends", text: $query)
@@ -120,9 +126,9 @@ struct SearchFriendsView: View {
                         Text(user.fullName)
                             .font(.headline)
                         HStack {
-                            Text("\(user.town ?? "Unknown state")")
+                            Text("\(user.town ?? "")")
                                 .fontWeight(.light)
-                            Text("\(user.state ?? "Unknown state")")
+                            Text("\(user.state ?? "")")
                                 .fontWeight(.light)
                         }
                     }
@@ -161,18 +167,18 @@ struct SearchFriendsView: View {
     }
 }
 
-struct FriendListView: View {
-    var body: some View {
-        Text("Friends")
-    }
-}
-
 struct FriendRequestsView: View {
-    @StateObject var viewModel = UserListViewModel()
+    @StateObject var viewModel = FriendsPageViewModel()
     var body: some View {
-        Text("Friend Requests (\(viewModel.friendRequestsViewData.count))")
-            .padding([.top, .bottom], 10)
-            .frame(maxWidth: .infinity, alignment: .leading)
+        if viewModel.friendRequestsViewData.count == 0 {
+            VStack {
+                Spacer()
+                Text("No friend requests yet")
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(Color(UIColor.lightGray))
+                Spacer()
+            }
+        }
         ForEach(viewModel.friendRequestsViewData) { user in
             HStack {
                 if let url = URL(string: user.user.profileImageURL ?? "") {
