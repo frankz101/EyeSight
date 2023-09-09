@@ -25,7 +25,7 @@ struct FriendsPageView: View {
     var body: some View {
         VStack {
             VStack(alignment: .leading) {
-                Text("friends")
+                Text("eyesight")
                     .fontWeight(.bold)
                     .font(.system(size: 24))
                     .padding(.horizontal, 20)
@@ -98,7 +98,7 @@ struct SearchFriendsView: View {
     @State private var searchTimer: Timer?
     
     var body: some View {
-        TextField("Search Friends", text: $query)
+        TextField("search friends", text: $query)
             .padding(.leading, 30)
             .overlay(
                     Image(systemName: "magnifyingglass")

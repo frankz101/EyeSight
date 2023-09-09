@@ -17,14 +17,35 @@ class CommentViewModel: ObservableObject {
 
     func addComment(commentSectionID: String, senderID: String, text: String) async {
         do {
-            let newComment = Comment(id: UUID().uuidString, commentSectionID: commentSectionID, senderID: senderID, timestamp: Timestamp(), text: text)
+            // Fetch user information first
+            let userDoc = try await Firestore.firestore().collection("users").document(senderID).getDocument()
+            guard let userData = userDoc.data(),
+                  let user = try? Firestore.Decoder().decode(User.self, from: userData) else {
+                print("Failed to fetch user info")
+                return
+            }
+            
+            // Create the new comment with user information
+            let newComment = Comment(id: UUID().uuidString,
+                                     commentSectionID: commentSectionID,
+                                     senderID: senderID,
+                                     senderName: user.fullName,
+                                     profileUrlImage: user.profileImageURL ?? "",
+                                     timestamp: Timestamp(),
+                                     text: text)
+            
+            // Encode and add the new comment to Firestore
             let encodedComment = try Firestore.Encoder().encode(newComment)
             try await Firestore.firestore().collection("commentSections").document(commentSectionID).collection("comments").document(newComment.id).setData(encodedComment)
+            
+            // Refresh the comments
             await fetchComments(inCommentSection: commentSectionID)
+            
         } catch {
             print("Failed to add comment with error \(error.localizedDescription)")
         }
     }
+
 
     func fetchComments(inCommentSection commentSectionID: String) async {
         do {

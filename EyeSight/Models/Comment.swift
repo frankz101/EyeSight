@@ -13,6 +13,8 @@ struct Comment: Identifiable, Codable {
     let id: String
     let commentSectionID: String // The id of the chat this message is part of
     let senderID: String // The id of the user who sent this message
+    var senderName: String
+    var profileUrlImage: String
     let timestamp: Timestamp
     let text: String
 }

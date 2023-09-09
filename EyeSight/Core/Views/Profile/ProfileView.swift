@@ -33,7 +33,7 @@ struct ProfileView: View {
         VStack {
             // Header
             HStack {
-                Text("Profile")
+                Text("profile")
                     .font(.largeTitle).bold()
                 Spacer()
                 Button(action: {

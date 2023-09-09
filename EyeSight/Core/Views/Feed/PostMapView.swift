@@ -74,7 +74,7 @@ struct PostMapView: View {
                         // Navigate to the comment section
                         commentViewModel.isShowingCommentSection = true
                     }) {
-                        Text("View Comments")
+                        Text("view comments")
                             .foregroundColor(.gray)
                             .font(.subheadline)
                             .padding(.bottom, 12)

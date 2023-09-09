@@ -16,7 +16,7 @@ struct FriendDetailSheetView: View {
         NavigationStack {
             VStack {
                 HStack (alignment: .center) {
-                    Text("Friends")
+                    Text("friends")
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .padding()

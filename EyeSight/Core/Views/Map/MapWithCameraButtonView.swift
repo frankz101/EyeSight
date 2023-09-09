@@ -35,61 +35,12 @@ struct MapWithCameraButtonView: View {
     
     var body: some View {
         ZStack {
-            
-            //            MapViewRepresentable(userLocationViewModel: userLocationViewModel, onAnnotationTapped: { postId in
-            //                            selectedPostId = IdentifiablePostId(id: postId, postId: postId)
-            //                        })
-            //                        .ignoresSafeArea()
-            //                        .padding(.bottom, 0.2)
-            //            //            .edgesIgnoringSafeArea(.top)
-            //
-            //                        VStack {
-            //                            HStack {
-            //                                if isShowingDetailSheet {
-            //                                    Button(action: {
-            //                                        isShowingDetailSheet = false
-            //                                    }) {
-            //                                        Text("Close Details")
-            //                                            .padding()
-            //                                            .background(Color.white)
-            //                                            .cornerRadius(8)
-            //                                            .shadow(radius: 4)
-            //                                    }
-            //                                    Spacer() // Pushes the next button to the right when "Close Details" is shown
-            //                                }
-            //
-            //                                if !isShowingDetailSheet {
-            //                                    Spacer() // Pushes the "Show Details" button to the right
-            //                                    Button(action: {
-            //                                        isShowingDetailSheet = true
-            //                                    }) {
-            //                                        Text("Show Details")
-            //                                            .padding()
-            //                                            .background(Color.white)
-            //                                            .cornerRadius(8)
-            //                                            .shadow(radius: 4)
-            //                                    }
-            //                                }
-            //                            }
-            //                            Spacer() // Pushes the HStack to the top
-            //                        }
-            //                        .padding()
-            //                    }
-            //                    .sheet(isPresented: $isShowingDetailSheet) {
-            //                        FriendDetailSheetView(friendsViewModel: friendsViewModel, viewModel: viewModel)
-            //                            .presentationDetents([.medium,.large])
-            //                            .presentationBackgroundInteraction(.enabled(upThrough: .medium))
-            //                    }
-            
-            //            ZStack {
             MapViewRepresentable(userLocationViewModel: userLocationViewModel, onAnnotationTapped: { postId in
-                print("Annotation tapped: \(postId)")  // Debug print
                 selectedPostId = IdentifiablePostId(id: postId, postId: postId)
                 isShowingFirstSheet = false
             })
             .edgesIgnoringSafeArea(.top)
             .sheet(item: $selectedPostId, onDismiss: {
-                print("Post Map View dismissed") // Debug print
                 isShowingFirstSheet = true
                 selectedPostId = nil
             }) { identifiablePostId in
@@ -103,11 +54,12 @@ struct MapWithCameraButtonView: View {
                         Button(action: {
                             isShowingDetailSheet = false
                         }) {
-                            Text("Close Details")
-                                .padding()
-                                .background(Color.white)
-                                .cornerRadius(8)
-                                .shadow(radius: 4)
+//                            Image(systemName: "xmark.circle")
+//                                .padding()
+//                                .font(.system(size:36))
+//                                .background(Color.white.frame(width:40,height:40))
+//                                .cornerRadius(8)
+//                                .shadow(radius: 4)
                         }
                         Spacer()
                     }
@@ -117,10 +69,11 @@ struct MapWithCameraButtonView: View {
                         Button(action: {
                             isShowingDetailSheet = true
                         }) {
-                            Text("Show Details")
+                            Image(systemName: "person.2.fill")
+                                .font(.system(size:24))
                                 .padding()
                                 .background(Color.white)
-                                .cornerRadius(8)
+                                .cornerRadius(24)
                                 .shadow(radius: 4)
                         }
                     }

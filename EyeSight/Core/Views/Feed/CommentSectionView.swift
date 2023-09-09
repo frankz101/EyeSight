@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseAuth
+import Kingfisher
 
 struct CommentSectionView: View {
     @ObservedObject var viewModel: CommentViewModel
@@ -14,12 +15,43 @@ struct CommentSectionView: View {
     @State private var commentText = ""
 
     var body: some View {
-        VStack {
+        VStack (spacing: 0) {
+            Text("comments")
+                .padding(.vertical, 24)
+                .fontWeight(.bold)
+                .frame(maxWidth: .infinity, alignment: .center)
+            Divider()
             List {
                 ForEach(viewModel.comments, id: \.id) { comment in
-                    Text(comment.text)
+                    HStack {
+                        if let url = URL(string: comment.profileUrlImage) {
+                            KFImage(url)
+                                .resizable()
+                                .frame(width: 36, height: 36)
+                                .clipShape(Circle())
+                        } else {
+                            Image(systemName: "person.crop.circle.fill")
+                                .resizable()
+                                .frame(width:30, height: 30)
+                        }
+                        VStack (alignment: .leading){
+                            Text(comment.senderName)
+                                .font(.caption)
+                                .fontWeight(.bold)
+
+                            Text(comment.text)
+                                .font(.system(size: 16))  //ADD REPLY
+
+                        }
+                        Spacer()
+                    }
+                    .padding(.vertical, 2)
                 }
+                .listRowSeparator(.hidden)
             }
+            .scrollContentBackground(.hidden)
+            .background(Color.white.edgesIgnoringSafeArea(.all))
+            .listStyle(PlainListStyle())
             HStack {
                 TextField("Add a comment", text: $commentText)
                     .padding(10)
