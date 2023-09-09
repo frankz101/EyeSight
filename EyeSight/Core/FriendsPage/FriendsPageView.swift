@@ -178,50 +178,51 @@ struct FriendRequestsView: View {
                     .foregroundColor(Color(UIColor.lightGray))
                 Spacer()
             }
-        }
-        ScrollView (showsIndicators: false) {
-            ForEach(viewModel.friendRequestsViewData) { user in
-                HStack {
-                    if let url = URL(string: user.user.profileImageURL ?? "") {
-                        KFImage(url)
-                            .resizable()
-                            .frame(width: 50, height: 50)
-                            .clipShape(Circle())
-                    } else {
-                        Image(systemName: "person.circle")
-                            .resizable()
-                            .frame(width:50, height: 50)
-                    }
-                    VStack(alignment: .leading) {
-                        Text(user.user.fullName)
-                            .font(.headline)
-                            .padding(.leading, 5)
-                    }
-                    Spacer()
-                    Button(action: {
-                        if let requestId = user.friendRequest.id {
-                            viewModel.rejectFriendRequest(requestId: requestId, from: user.friendRequest.senderId)
+        } else {
+            ScrollView (showsIndicators: false) {
+                ForEach(viewModel.friendRequestsViewData) { user in
+                    HStack {
+                        if let url = URL(string: user.user.profileImageURL ?? "") {
+                            KFImage(url)
+                                .resizable()
+                                .frame(width: 50, height: 50)
+                                .clipShape(Circle())
                         } else {
-                            print("Request invalid")
+                            Image(systemName: "person.crop.circle.fill")
+                                .resizable()
+                                .frame(width:50, height: 50)
                         }
-                    }) {
-                        Text("Reject")
-                    }
-                    Button(action: {
-                        if let requestId = user.friendRequest.id {
-                            viewModel.acceptFriendRequest(requestId: requestId, from: user.friendRequest.senderId)
-                        } else {
-                            print("Request invalid")
+                        VStack(alignment: .leading) {
+                            Text(user.user.fullName)
+                                .font(.headline)
+                                .padding(.leading, 5)
                         }
-                    }) {
-                        Text("Accept")
+                        Spacer()
+                        Button(action: {
+                            if let requestId = user.friendRequest.id {
+                                viewModel.rejectFriendRequest(requestId: requestId, from: user.friendRequest.senderId)
+                            } else {
+                                print("Request invalid")
+                            }
+                        }) {
+                            Text("Reject")
+                        }
+                        Button(action: {
+                            if let requestId = user.friendRequest.id {
+                                viewModel.acceptFriendRequest(requestId: requestId, from: user.friendRequest.senderId)
+                            } else {
+                                print("Request invalid")
+                            }
+                        }) {
+                            Text("Accept")
+                        }
                     }
                 }
             }
+            .padding(5)
+            .padding(.top, 6)
         }
-        .padding(5)
-        .padding(.top, 6)
-    }
+        }
 }
 
 

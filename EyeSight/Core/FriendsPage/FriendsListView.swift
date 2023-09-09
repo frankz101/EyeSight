@@ -21,35 +21,36 @@ struct FriendsListView: View {
                 Spacer()
             }
             
-        }
-        List(friendsViewModel.friends, id: \.id) { friend in
-            VStack(alignment: .leading) {
-                HStack {
-                    if let url = URL(string: friend.profileImageURL ?? "") {
-                        KFImage(url)
-                            .resizable()
-                            .frame(width: 50, height: 50)
-                            .clipShape(Circle())
-                    } else {
-                        Image(systemName: "person.circle")
-                            .resizable()
-                            .frame(width:50, height: 50)
-                    }
-                    Text(friend.fullName)
-                        .font(.headline)
-                        .padding(.leading, 5)
-                    Spacer()
+        } else {
+            List(friendsViewModel.friends, id: \.id) { friend in
+                VStack(alignment: .leading) {
                     HStack {
-                        Text("\(friend.town ?? ""), \(friend.state ?? "")")
-                            .fontWeight(.light)
+                        if let url = URL(string: friend.profileImageURL ?? "") {
+                            KFImage(url)
+                                .resizable()
+                                .frame(width: 50, height: 50)
+                                .clipShape(Circle())
+                        } else {
+                            Image(systemName: "person.crop.circle.fill")
+                                .resizable()
+                                .frame(width:50, height: 50)
+                        }
+                        Text(friend.fullName)
+                            .font(.headline)
+                            .padding(.leading, 5)
+                        Spacer()
+                        HStack {
+                            Text("\(friend.town ?? ""), \(friend.state ?? "")")
+                                .fontWeight(.light)
+                        }
                     }
                 }
+                .listRowSeparator(.hidden)
             }
-            .listRowSeparator(.hidden)
+            .padding(.horizontal, -15)
+            .scrollContentBackground(.hidden)
+            .background(Color.white.edgesIgnoringSafeArea(.all))
+            .listStyle(PlainListStyle())
         }
-        .padding(.horizontal, -15)
-        .scrollContentBackground(.hidden)
-        .background(Color.white.edgesIgnoringSafeArea(.all))
-        .listStyle(PlainListStyle())
     }
 }

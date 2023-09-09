@@ -27,6 +27,7 @@ struct FriendDetailSheetView: View {
                 Divider()
                 FriendsListView(friendsViewModel: friendsViewModel)
             }
+            .padding()
         }
     }
 }
