@@ -20,7 +20,6 @@ struct FriendsPageView: View {
     @State private var bubblePosition: CGFloat = 0
     
     @StateObject var viewModel = FriendsPageViewModel()
-    @StateObject var friendsViewModel = FriendsViewModel()
 
     var body: some View {
         VStack {
@@ -35,7 +34,7 @@ struct FriendsPageView: View {
             case .search:
                 SearchFriendsView()
             case .friends:
-                FriendsListView(friendsViewModel: friendsViewModel)
+                FriendsListView()
             case .requests:
                 FriendRequestsView()
             }

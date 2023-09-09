@@ -11,17 +11,15 @@ struct HomeView: View {
     @EnvironmentObject var viewModel: AuthService
     @ObservedObject var profileViewModel: ProfileViewModel
     @ObservedObject var userLocationViewModel: UserLocationViewModel
-    @ObservedObject var friendsViewModel: FriendsViewModel
 
         init() {
             self.userLocationViewModel = UserLocationViewModel(locationManager: LocationManager())
             self.profileViewModel = ProfileViewModel()
-            self.friendsViewModel = FriendsViewModel()
         }
     var body: some View {
         Group {
-            if viewModel.userSession != nil {
-                TabBarView(userLocationViewModel: userLocationViewModel, profileViewModel: profileViewModel, friendsViewModel: friendsViewModel)
+            if $viewModel.userSession != nil {
+                TabBarView(userLocationViewModel: userLocationViewModel, profileViewModel: profileViewModel)
             } else {
                 LoginView()
             }
@@ -29,8 +27,8 @@ struct HomeView: View {
     }
 }
 
-struct HomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeView()
-    }
-}
+//struct HomeView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        HomeView()
+//    }
+//}

@@ -7,9 +7,12 @@
 
 import Foundation
 
-struct Friend {
-    let id: String
+struct Friend: Identifiable {
+    var id: String
     var name: String
     let locationId: String
+    var profileImageURL: String?
+    var town: String?
+    var state: String?
     var distance: Double?
 }

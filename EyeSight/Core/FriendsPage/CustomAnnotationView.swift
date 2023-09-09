@@ -40,6 +40,7 @@ class CustomAnnotationView: MKAnnotationView {
 
 
     private func makeRectangleImage(image: UIImage, width: CGFloat, borderWidth: CGFloat, borderColor: UIColor) -> UIImage {
+
         let aspectRatio: CGFloat = 3/4
         let size = CGSize(width: width, height: width / aspectRatio)
         

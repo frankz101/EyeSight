@@ -30,7 +30,6 @@ struct MapWithCameraButtonView: View {
     @State private var isShowingFirstSheet = false
     @State private var isShowingDetailSheet = false
     @ObservedObject var userLocationViewModel: UserLocationViewModel
-    @ObservedObject var friendsViewModel: FriendsViewModel
     @ObservedObject var viewModel: ProfileViewModel
     
     var body: some View {
@@ -82,7 +81,7 @@ struct MapWithCameraButtonView: View {
             }
             .sheet(isPresented: $isShowingDetailSheet, onDismiss: {
             }) {
-                FriendDetailSheetView(friendsViewModel: friendsViewModel, viewModel: viewModel)
+                FriendDetailSheetView(viewModel: viewModel)
                     .presentationDetents([.medium,.large])
                     .presentationBackgroundInteraction(.enabled(upThrough: .medium))
             }

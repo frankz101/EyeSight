@@ -17,7 +17,6 @@ struct FriendRequestViewData: Identifiable {
 
 class FriendsPageViewModel: ObservableObject {
     @Published var users = [User]()
-    @ObservedObject var friendsViewModel = FriendsViewModel()
     @Published var friendRequests: [FriendRequest] = []
     @Published var friendRequestsViewData = [FriendRequestViewData]()
     
@@ -83,7 +82,7 @@ class FriendsPageViewModel: ObservableObject {
 
 
     func isUserFriend(userId: String) -> Bool {
-        return friendsViewModel.friends.contains(where: { $0.id == userId })
+        return DataManager.shared.friends.contains(where: { $0.id == userId })
     }
     
     func updateFriendRequestsViewData() {

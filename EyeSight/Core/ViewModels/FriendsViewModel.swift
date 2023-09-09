@@ -14,7 +14,7 @@ class FriendsViewModel: ObservableObject {
     private var listener: ListenerRegistration?
     
     init() {
-        fetchFriends()
+//        fetchFriends()
     }
     
     func fetchFriends() {

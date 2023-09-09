@@ -9,7 +9,6 @@ import SwiftUI
 import Kingfisher
 
 struct FriendDetailSheetView: View {
-    @ObservedObject var friendsViewModel: FriendsViewModel
     @ObservedObject var viewModel: ProfileViewModel
     
     var body: some View {
@@ -25,7 +24,7 @@ struct FriendDetailSheetView: View {
                     
                 }
                 Divider()
-                FriendsListView(friendsViewModel: friendsViewModel)
+                FriendsListView()
             }
             .padding()
         }
