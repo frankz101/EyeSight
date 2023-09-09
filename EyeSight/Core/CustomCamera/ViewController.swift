@@ -325,13 +325,31 @@ class ViewController: UIViewController {
 
         
         
-        let submitButton = UIButton(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
-        submitButton.center = self.view.center
-        submitButton.setTitle("Submit", for: .normal)
-        submitButton.backgroundColor = .blue
-        submitButton.addTarget(self, action: #selector(submitImage), for: .touchUpInside)
+        let submitButton = UIButton(type: .system) // Use .system type to respect the system's default button appearance
+
+        // Set button properties
+        submitButton.setTitle("Post", for: .normal)
+        submitButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 28) // Adjust font size and style as needed
+        submitButton.setTitleColor(.white, for: .normal)
+
+        // Calculate the x coordinate to horizontally center the button relative to captureImageButton
+        let xCoordinate = captureImageButton.frame.origin.x + (captureImageButton.frame.width - 200) / 2
+
+        // Set the button's frame with the calculated x coordinate
+        submitButton.frame = CGRect(x: xCoordinate,
+                                    y: captureImageButton.frame.origin.y,
+                                    width: 200,
+                                    height: 50)
+
+        // Set a tag to identify the button later if needed (as you did before)
         submitButton.tag = 999
+
+        // Add a target for the button's action
+        submitButton.addTarget(self, action: #selector(submitImage), for: .touchUpInside)
+
+        // Add the button to the view
         self.view.addSubview(submitButton)
+
     }
     
     @objc func submitImage() {
