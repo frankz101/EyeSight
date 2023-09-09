@@ -33,23 +33,27 @@ struct FriendDetailSheetView: View {
                                     .resizable()
                                     .frame(width: 50, height: 50)
                                     .clipShape(Circle())
+                            } else {
+                                Image(systemName: "person.circle")
+                                    .resizable()
+                                    .frame(width:50, height: 50)
                             }
-                            VStack(alignment: .leading) {
-                                Text(friend.fullName)
-                                    .font(.headline)
-                                HStack {
-                                    Text("\(friend.town ?? "Unknown state")")
-                                        .fontWeight(.light)
-                                    Text("\(friend.state ?? "Unknown state")")
-                                        .fontWeight(.light)
-                                }
+                            Text(friend.fullName)
+                                .font(.headline)
+                            Spacer()
+                            HStack {
+                                Text("\(friend.town ?? "Unknown Town")")
+                                    .fontWeight(.light)
+                                Text("\(friend.state ?? "Unknown State")")
+                                    .fontWeight(.light)
                             }
                         }
                     }
-                    .padding(5)
+                    .listRowSeparator(.hidden)
                 }
                 .scrollContentBackground(.hidden)
                 .background(Color.white.edgesIgnoringSafeArea(.all))
+                .listStyle(PlainListStyle())
 
             }
         }

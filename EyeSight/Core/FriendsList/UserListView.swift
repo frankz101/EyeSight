@@ -9,21 +9,30 @@ import SwiftUI
 import Firebase
 import Kingfisher
 
+enum ContentView: String, CaseIterable {
+    case search = "Search"
+    case friends = "Friends"
+    case requests = "Requests"
+}
+
 struct UserListView: View {
-    @State private var isShowingSearchFriends = true
+    @State private var currentView: ContentView = .search
     
     var body: some View {
         VStack {
             VStack(alignment: .leading) {
-                Text("Add Friends")
+                Text("EyeSight")
                     .fontWeight(.bold)
-                    .font(.system(size: 36))
+                    .font(.system(size: 24))
                     .padding(.horizontal, 20)
             }
 
-            if isShowingSearchFriends {
+            switch currentView {
+            case .search:
                 SearchFriendsView()
-            } else {
+            case .friends:
+                FriendListView()
+            case .requests:
                 FriendRequestsView()
             }
 
@@ -31,23 +40,34 @@ struct UserListView: View {
 
             HStack(spacing: 10) {
                 Button(action: {
-                    self.isShowingSearchFriends = true
+                    currentView = .search
                 }) {
                     Text("Search")
                         .font(.system(size: 15))
                         .padding(7)
-                        .background(isShowingSearchFriends ? Color.gray: Color(UIColor.lightGray))
+                        .background(currentView == .search ? Color.gray: Color(UIColor.lightGray))
+                        .foregroundColor(.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                }
+                
+                Button(action: {
+                    currentView = .friends
+                }) {
+                    Text("Friends")
+                        .font(.system(size: 15))
+                        .padding(7)
+                        .background(currentView == .friends ? Color.gray: Color(UIColor.lightGray))
                         .foregroundColor(.white)
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                 }
 
                 Button(action: {
-                    self.isShowingSearchFriends = false
+                    currentView = .requests
                 }) {
                     Text("Requests")
                         .font(.system(size: 15))
                         .padding(7)
-                        .background(isShowingSearchFriends ? Color(UIColor.lightGray) : Color.gray)
+                        .background(currentView == .requests ? Color.gray : Color(UIColor.lightGray))
                         .foregroundColor(.white)
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                 }
@@ -138,6 +158,12 @@ struct SearchFriendsView: View {
             }
             .padding(5)
         }
+    }
+}
+
+struct FriendListView: View {
+    var body: some View {
+        Text("Friends")
     }
 }
 

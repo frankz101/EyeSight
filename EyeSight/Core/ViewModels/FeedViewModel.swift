@@ -43,12 +43,13 @@ class FeedViewModel: ObservableObject {
     
     
     
-    func fetchUser() {
-        guard let userID = Auth.auth().currentUser?.uid else {
+    func fetchUser(userId: String? = nil) {
+        let fetchUserId = userId ?? Auth.auth().currentUser?.uid
+        guard let userID = fetchUserId else {
             print("No user is logged in.")
             return
         }
-        
+
         let docRef = Firestore.firestore().collection("users").document(userID)
         
         userProfileListener = docRef.addSnapshotListener { (documentSnapshot, error) in
@@ -63,6 +64,8 @@ class FeedViewModel: ObservableObject {
             }
         }
     }
+
+
     
     func fetchPost(postId: String) {
         let docRef = Firestore.firestore().collection("posts").document(postId)
@@ -73,7 +76,9 @@ class FeedViewModel: ObservableObject {
                     let post = try document.data(as: Post.self)
                     DispatchQueue.main.async {
                         self?.post = post
+                        self?.fetchUser(userId: post.userID)
                     }
+
                 } catch {
                     print("Error decoding post: \(error)")
                 }
@@ -82,6 +87,7 @@ class FeedViewModel: ObservableObject {
             }
         }
     }
+
 
     
     deinit {

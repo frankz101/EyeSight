@@ -86,11 +86,14 @@ struct PostMapView: View {
             }
             .onAppear {
                 viewModel.fetchPost(postId: postId)
-                viewModel.fetchUser()
+                if let userId = viewModel.post?.userID {
+                    viewModel.fetchUser(userId: userId)
+                }
                 if let commentSectionID = viewModel.post?.commentSectionID {
                     commentViewModel.startListening(commentSectionID: commentSectionID)
                 }
             }
+
             .onDisappear {
                 commentViewModel.stopListening()
             }
