@@ -49,29 +49,45 @@ class CommentViewModel: ObservableObject {
 
     func fetchComments(inCommentSection commentSectionID: String) async {
         do {
-            let snapshot = try await Firestore.firestore().collection("commentSections").document(commentSectionID).collection("comments").getDocuments()
-            self.comments = snapshot.documents.compactMap { doc in
-                try? Firestore.Decoder().decode(Comment.self, from: doc.data())
+            let snapshot = try await Firestore.firestore().collection("commentSections")
+                .document(commentSectionID)
+                .collection("comments")
+                .order(by: "timestamp", descending: false) // Ordered by timestamp
+                .getDocuments()
+            
+            DispatchQueue.main.async {
+                self.comments = snapshot.documents.compactMap { doc in
+                    try? Firestore.Decoder().decode(Comment.self, from: doc.data())
+                }
+                print("Fetched \(self.comments.count) comments")
             }
-            print("Fetched \(self.comments.count) comments")
         } catch {
             print("Failed to fetch comments with error \(error.localizedDescription)")
         }
     }
 
+
     func startListening(commentSectionID: String) {
-        let query = Firestore.firestore().collection("commentSections").document(commentSectionID).collection("comments")
-        listener = query.addSnapshotListener { querySnapshot, error in
-            if let error = error {
-                print("Error getting documents: \(error)")
-            } else {
-                self.comments = querySnapshot?.documents.compactMap { doc in
-                    try? Firestore.Decoder().decode(Comment.self, from: doc.data())
-                } ?? []
-                print("Fetched \(self.comments.count) comments")
+        let query = Firestore.firestore().collection("commentSections")
+            .document(commentSectionID)
+            .collection("comments")
+            .order(by: "timestamp", descending: true)  // Order by timestamp
+        
+        listener = query.addSnapshotListener { [weak self] querySnapshot, error in
+            DispatchQueue.main.async {  // Make sure to update UI on the main thread
+                if let error = error {
+                    print("Error getting documents: \(error)")
+                } else {
+                    self?.comments = querySnapshot?.documents.compactMap { doc in
+                        try? Firestore.Decoder().decode(Comment.self, from: doc.data())
+                    } ?? []
+                    print("Fetched \(self?.comments.count ?? 0) comments")
+                }
             }
         }
     }
+
+
 
     func stopListening() {
         listener?.remove() // Don't forget to detach the listener when you're done

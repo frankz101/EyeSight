@@ -67,7 +67,7 @@ struct CommentSectionView: View {
                         .foregroundColor(.white)
                         .padding(.horizontal, 10)
                         .padding(.vertical, 5)
-                        .background(commentText.trimmingCharacters(in: .whitespaces).isEmpty ? Color.gray : Color.blue)
+                        .background(commentText.trimmingCharacters(in: .whitespaces).isEmpty ? Color.gray : Color.black)
                         .cornerRadius(8)
                 }
                 .disabled(commentText.trimmingCharacters(in: .whitespaces).isEmpty)

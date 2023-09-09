@@ -16,7 +16,7 @@ struct FriendsPageView: View {
         case requests
     }
     
-    @State private var currentView: Section = .search
+    @State private var currentView: Section = .friends
     @State private var bubblePosition: CGFloat = 0
     
     @StateObject var viewModel = FriendsPageViewModel()
