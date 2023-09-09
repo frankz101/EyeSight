@@ -215,7 +215,7 @@
 			isa = PBXGroup;
 			children = (
 				D4F487822A659141004868A2 /* CustomCamera */,
-				D4F487792A645C62004868A2 /* FriendsList */,
+				D4F487792A645C62004868A2 /* FriendsPage */,
 				D4F4875B2A63A5F0004868A2 /* Authentication */,
 				D4F4874A2A639BEF004868A2 /* ViewModels */,
 				D4F4874B2A639BFB004868A2 /* Views */,
@@ -273,7 +273,6 @@
 				D436F9242A65D361006C984F /* Feed */,
 				D4F4874C2A639C0B004868A2 /* HomeView.swift */,
 				D4F487662A63A7E9004868A2 /* TabBarView.swift */,
-				D4F4876A2A63A817004868A2 /* FriendsPageView.swift */,
 				D436F9222A65C806006C984F /* CameraTestView.swift */,
 			);
 			path = Views;
@@ -289,9 +288,10 @@
 			path = Authentication;
 			sourceTree = "<group>";
 		};
-		D4F487792A645C62004868A2 /* FriendsList */ = {
+		D4F487792A645C62004868A2 /* FriendsPage */ = {
 			isa = PBXGroup;
 			children = (
+				D4F4876A2A63A817004868A2 /* FriendsPageView.swift */,
 				D4F4877A2A645C7E004868A2 /* FriendsPageViewModel.swift */,
 				FBC9B2042AAC1B4C0058D8A1 /* FriendsListView.swift */,
 				D4F4877E2A645CC6004868A2 /* UserService.swift */,
@@ -299,7 +299,7 @@
 				D436F9362A6883D5006C984F /* CustomAnnotationView.swift */,
 				D436F93C2A71CB58006C984F /* UserCustomAnnotation.swift */,
 			);
-			path = FriendsList;
+			path = FriendsPage;
 			sourceTree = "<group>";
 		};
 		D4F487822A659141004868A2 /* CustomCamera */ = {

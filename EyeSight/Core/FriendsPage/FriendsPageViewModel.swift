@@ -27,65 +27,60 @@ class FriendsPageViewModel: ObservableObject {
     }
     
     func searchUsers(text: String) {
-            // Clear the current array
-        if (text == "") {
-            self.users = []
-        } else {
-            self.users = []
-            // Fetch the users matching the text
+        // Clear the current array
+        self.users = []
+        
+        guard text != "" else { return }
+        
+        let dispatchGroup = DispatchGroup()
+        
+        dispatchGroup.enter()
+        // Fetch the users matching the text by fullName
         Firestore.firestore().collection("users").whereField("fullName", isGreaterThanOrEqualTo: text)
-            .whereField("fullName", isLessThan: text + "{").getDocuments { (querySnapshot, err) in
-                guard let documents = querySnapshot?.documents else {
-                    print("No documents")
-                    return
+            .whereField("fullName", isLessThan: "\(text){").getDocuments { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    self.users.append(contentsOf: self.mapDocumentsToUsers(querySnapshot?.documents))
                 }
-                
-                self.users = documents.map { queryDocumentSnapshot -> User in
-                    let data = queryDocumentSnapshot.data()
-
-                    let id = data["id"] as? String ?? ""
-                    let fullName = data["fullName"] as? String ?? ""
-                    let email = data["email"] as? String ?? ""
-                    let friends = data["friends"] as? [String]
-                    let hasPostedToday = data["hasPostedToday"] as? Bool ?? false
-                    let locationId = data["locationId"] as? String
-                    let profileImageURL = data["profileImageURL"] as? String
-                    let town = data["town"] as? String
-                    let state = data["state"] as? String
-                    
-                    return User(id: id, fullName: fullName, email: email, friends: friends, hasPostedToday: hasPostedToday, locationId: locationId, profileImageURL: profileImageURL, town: town, state: state)
-                }
+                dispatchGroup.leave()
             }
-            
-            // Repeat the fetch for emails
+        
+        dispatchGroup.enter()
+        // Repeat the fetch for emails
         Firestore.firestore().collection("users").whereField("email", isGreaterThanOrEqualTo: text)
-            .whereField("email", isLessThan: text + "{").getDocuments { (querySnapshot, err) in
-                guard let documents = querySnapshot?.documents else {
-                    print("No documents")
-                    return
+            .whereField("email", isLessThan: "\(text){").getDocuments { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    self.users.append(contentsOf: self.mapDocumentsToUsers(querySnapshot?.documents))
                 }
-                
-                let newUsers = documents.map { queryDocumentSnapshot -> User in
-                    let data = queryDocumentSnapshot.data()
-
-                    let id = data["id"] as? String ?? ""
-                    let fullName = data["fullName"] as? String ?? ""
-                    let email = data["email"] as? String ?? ""
-                    let friends = data["friends"] as? [String]
-                    let hasPostedToday = data["hasPostedToday"] as? Bool ?? false
-                    let locationId = data["locationId"] as? String
-                    let profileImageURL = data["profileImageURL"] as? String
-                    let town = data["town"] as? String
-                    let state = data["state"] as? String
-                    
-                    return User(id: id, fullName: fullName, email: email, friends: friends, hasPostedToday: hasPostedToday, locationId: locationId, profileImageURL: profileImageURL, town: town, state: state)
-                }
-                
-                // Append the new users to the existing array
-                self.users.append(contentsOf: newUsers)
+                dispatchGroup.leave()
             }
+        
+        dispatchGroup.notify(queue: .main) {
+            // All queries finished
         }
-        }
+    }
+
+    func mapDocumentsToUsers(_ documents: [QueryDocumentSnapshot]?) -> [User] {
+        return documents?.map { queryDocumentSnapshot -> User in
+            let data = queryDocumentSnapshot.data()
+            
+            let id = data["id"] as? String ?? ""
+            let fullName = data["fullName"] as? String ?? ""
+            let email = data["email"] as? String ?? ""
+            let friends = data["friends"] as? [String] ?? []
+            let hasPostedToday = data["hasPostedToday"] as? Bool ?? false
+            let locationId = data["locationId"] as? String ?? ""
+            let profileImageURL = data["profileImageURL"] as? String ?? ""
+            let town = data["town"] as? String ?? ""
+            let state = data["state"] as? String ?? ""
+            
+            return User(id: id, fullName: fullName, email: email, friends: friends, hasPostedToday: hasPostedToday, locationId: locationId, profileImageURL: profileImageURL, town: town, state: state)
+        } ?? []
+    }
+
 
     func isUserFriend(userId: String) -> Bool {
         return friendsViewModel.friends.contains(where: { $0.id == userId })

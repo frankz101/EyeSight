@@ -39,7 +39,7 @@ struct FriendsPageView: View {
             case .requests:
                 FriendRequestsView()
             }
-
+            
             Spacer()
 
             HStack(spacing: 10) {
@@ -95,6 +95,8 @@ struct SearchFriendsView: View {
     @State private var query = ""
     @StateObject var viewModel = FriendsPageViewModel()
     
+    @State private var searchTimer: Timer?
+    
     var body: some View {
         TextField("Search Friends", text: $query)
             .padding(.leading, 30)
@@ -109,60 +111,58 @@ struct SearchFriendsView: View {
             .background(Color(UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1.0)))
             .clipShape(RoundedRectangle(cornerRadius: 10))
             .onChange(of: query, perform: { value in
-                query = value
-                viewModel.searchUsers(text: query)
-            }
-        )
-        ForEach(viewModel.users, id: \.id) { user in
-            VStack(alignment: .leading) {
-                HStack {
-                    if let url = URL(string: user.profileImageURL ?? "") {
-                        KFImage(url)
-                            .resizable()
-                            .frame(width: 50, height: 50)
-                            .clipShape(Circle())
-                    }
-                    VStack(alignment: .leading) {
-                        Text(user.fullName)
-                            .font(.headline)
-                        HStack {
-                            Text("\(user.town ?? "")")
-                                .fontWeight(.light)
-                            Text("\(user.state ?? "")")
-                                .fontWeight(.light)
+                            searchTimer?.invalidate()
+                            searchTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false, block: { _ in
+                                viewModel.searchUsers(text: value)
+                            })
+                        })
+        ScrollView (showsIndicators: false) {
+            ForEach(viewModel.users, id: \.id) { user in
+                VStack(alignment: .leading) {
+                    HStack {
+                        if let url = URL(string: user.profileImageURL ?? "") {
+                            KFImage(url)
+                                .resizable()
+                                .frame(width: 50, height: 50)
+                                .clipShape(Circle())
                         }
-                    }
-                    Spacer()
-                    if viewModel.isUserFriend(userId: user.id) {
-                                Button(action: {
-                                    // Call function to remove friend
-                                    if let currentUserID = Auth.auth().currentUser?.uid {
-                                        Task {
-                                            do {
-                                                try await viewModel.removeFriend(userID: currentUserID, friendID: user.id)
-                                            } catch {
-                                                print("Error adding friend: \(error)")
+                        VStack(alignment: .leading) {
+                            Text(user.fullName)
+                                .font(.headline)
+                                .padding(.leading, 5)
+                        }
+                        Spacer()
+                        if viewModel.isUserFriend(userId: user.id) {
+                                    Button(action: {
+                                        // Call function to remove friend
+                                        if let currentUserID = Auth.auth().currentUser?.uid {
+                                            Task {
+                                                do {
+                                                    try await viewModel.removeFriend(userID: currentUserID, friendID: user.id)
+                                                } catch {
+                                                    print("Error adding friend: \(error)")
+                                                }
                                             }
                                         }
+                                    }) {
+                                        Text("Remove")
                                     }
-                                }) {
-                                    Text("Remove Friend")
-                                }
-                            } else {
-                                Button(action: {
-                                    // Call function to add friend
-                                    if let currentUserID = Auth.auth().currentUser?.uid {
-                                        viewModel.sendFriendRequest(userId: currentUserID, to: user.id)
+                                } else {
+                                    Button(action: {
+                                        // Call function to add friend
+                                        if let currentUserID = Auth.auth().currentUser?.uid {
+                                            viewModel.sendFriendRequest(userId: currentUserID, to: user.id)
+                                        }
+                                        
+                                    }) {
+                                        Text("Add")
                                     }
-                                    
-                                }) {
-                                    Text("Add Friend")
                                 }
-                            }
+                    }
+                    
                 }
-                
+                .padding(5)
             }
-            .padding(5)
         }
     }
 }
@@ -179,45 +179,48 @@ struct FriendRequestsView: View {
                 Spacer()
             }
         }
-        ForEach(viewModel.friendRequestsViewData) { user in
-            HStack {
-                if let url = URL(string: user.user.profileImageURL ?? "") {
-                    KFImage(url)
-                        .resizable()
-                        .frame(width: 50, height: 50)
-                        .clipShape(Circle())
-                }
-                VStack(alignment: .leading) {
-                    Text(user.user.fullName)
-                        .font(.headline)
-                    HStack {
-                        Text("\(user.user.town ?? "Unknown state")")
-                            .fontWeight(.light)
-                        Text("\(user.user.state ?? "Unknown state")")
-                            .fontWeight(.light)
-                    }
-                }
-                Spacer()
-                Button(action: {
-                    if let requestId = user.friendRequest.id {
-                        viewModel.rejectFriendRequest(requestId: requestId, from: user.friendRequest.senderId)
+        ScrollView (showsIndicators: false) {
+            ForEach(viewModel.friendRequestsViewData) { user in
+                HStack {
+                    if let url = URL(string: user.user.profileImageURL ?? "") {
+                        KFImage(url)
+                            .resizable()
+                            .frame(width: 50, height: 50)
+                            .clipShape(Circle())
                     } else {
-                        print("Request invalid")
+                        Image(systemName: "person.circle")
+                            .resizable()
+                            .frame(width:50, height: 50)
                     }
-                }) {
-                    Text("Reject")
-                }
-                Button(action: {
-                    if let requestId = user.friendRequest.id {
-                        viewModel.acceptFriendRequest(requestId: requestId, from: user.friendRequest.senderId)
-                    } else {
-                        print("Request invalid")
+                    VStack(alignment: .leading) {
+                        Text(user.user.fullName)
+                            .font(.headline)
+                            .padding(.leading, 5)
                     }
-                }) {
-                    Text("Accept")
+                    Spacer()
+                    Button(action: {
+                        if let requestId = user.friendRequest.id {
+                            viewModel.rejectFriendRequest(requestId: requestId, from: user.friendRequest.senderId)
+                        } else {
+                            print("Request invalid")
+                        }
+                    }) {
+                        Text("Reject")
+                    }
+                    Button(action: {
+                        if let requestId = user.friendRequest.id {
+                            viewModel.acceptFriendRequest(requestId: requestId, from: user.friendRequest.senderId)
+                        } else {
+                            print("Request invalid")
+                        }
+                    }) {
+                        Text("Accept")
+                    }
                 }
             }
         }
+        .padding(5)
+        .padding(.top, 6)
     }
 }
 
