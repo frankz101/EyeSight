@@ -39,12 +39,26 @@ struct TabBarView: View {
             
             ZStack {
                 
-                ProfileView(viewModel: profileViewModel)
+                ZStack {
+                    
+                    ProfileView(viewModel: profileViewModel)
+                }
+                .tabItem {
+                    Label("Profile", systemImage: "person.crop.circle.fill")
+                }
+                .tag(2)
             }
-            .tabItem {
-                Label("Profile", systemImage: "person.crop.circle.fill")
-            }
-            .tag(2)
+            .overlay(
+                Rectangle()
+                    .fill(Color.gray.opacity(0.2))
+                    .frame(height: 1)
+                    .offset(y: -49), // This offset may need to be adjusted
+                alignment: .bottom
+            )
+            .accentColor(.black)
+        }
+
+        
             
             
                                 
@@ -90,7 +104,8 @@ struct TabBarView: View {
 //                    .tag(4)
 //            }
 //            .background(Color.clear)
-        }
+
+        
     }
 }
 

@@ -24,7 +24,7 @@ struct CameraTestView: View {
                     .cornerRadius(10)
             }
         }
-        .sheet(isPresented: $showModal) {
+        .fullScreenCover(isPresented: $showModal) {
             CameraViewControllerRepresentable { image in
                 print(image)
                 // Call returnToMapView when the image is captured
@@ -32,6 +32,7 @@ struct CameraTestView: View {
                 // Set showModal to false to close the modal
                 self.showModal = false
             }
+            .ignoresSafeArea()
         }
     }
 }

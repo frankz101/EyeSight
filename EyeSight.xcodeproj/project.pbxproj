@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D4242C682AAC0B9800FAEC5A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D4242C672AAC0B9800FAEC5A /* GoogleService-Info.plist */; };
 		D436F91B2A65C66E006C984F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D436F91A2A65C66E006C984F /* FirebaseAuth */; };
 		D436F91D2A65C66E006C984F /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = D436F91C2A65C66E006C984F /* FirebaseFirestore */; };
 		D436F91F2A65C66E006C984F /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D436F91E2A65C66E006C984F /* FirebaseFirestoreSwift */; };
@@ -59,11 +60,13 @@
 		D4F4878D2A659A24004868A2 /* UserPhotoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F4878C2A659A24004868A2 /* UserPhotoViewModel.swift */; };
 		D4F4878F2A65BCC0004868A2 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F4878E2A65BCC0004868A2 /* Post.swift */; };
 		FB81E1C02A77150C00A4915D /* FriendRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB81E1BF2A77150C00A4915D /* FriendRequest.swift */; };
-		FBC9B2032AAB898B0058D8A1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FBC9B2022AAB898B0058D8A1 /* GoogleService-Info.plist */; };
+
 		FBC9B2052AAC1B4C0058D8A1 /* FriendsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC9B2042AAC1B4C0058D8A1 /* FriendsListView.swift */; };
+
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D4242C672AAC0B9800FAEC5A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D436F9222A65C806006C984F /* CameraTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraTestView.swift; sourceTree = "<group>"; };
 		D436F9272A65D3A5006C984F /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 		D436F9292A66EA9F006C984F /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
@@ -109,8 +112,9 @@
 		D4F4878C2A659A24004868A2 /* UserPhotoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPhotoViewModel.swift; sourceTree = "<group>"; };
 		D4F4878E2A65BCC0004868A2 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		FB81E1BF2A77150C00A4915D /* FriendRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequest.swift; sourceTree = "<group>"; };
-		FBC9B2022AAB898B0058D8A1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+
 		FBC9B2042AAC1B4C0058D8A1 /* FriendsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListView.swift; sourceTree = "<group>"; };
+
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,7 +172,7 @@
 		D4F487292A639829004868A2 = {
 			isa = PBXGroup;
 			children = (
-				FBC9B2022AAB898B0058D8A1 /* GoogleService-Info.plist */,
+				D4242C672AAC0B9800FAEC5A /* GoogleService-Info.plist */,
 				D4F487342A639829004868A2 /* EyeSight */,
 				D4F487332A639829004868A2 /* Products */,
 			);
@@ -389,7 +393,7 @@
 			files = (
 				D4F4873D2A63982E004868A2 /* Preview Assets.xcassets in Resources */,
 				D4F4873A2A63982E004868A2 /* Assets.xcassets in Resources */,
-				FBC9B2032AAB898B0058D8A1 /* GoogleService-Info.plist in Resources */,
+				D4242C682AAC0B9800FAEC5A /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
