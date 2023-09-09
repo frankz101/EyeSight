@@ -46,12 +46,11 @@
 		D4F487652A63A6DF004868A2 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F487642A63A6DF004868A2 /* LoginView.swift */; };
 		D4F487672A63A7E9004868A2 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F487662A63A7E9004868A2 /* TabBarView.swift */; };
 		D4F487692A63A80B004868A2 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F487682A63A80B004868A2 /* FeedView.swift */; };
-		D4F4876B2A63A818004868A2 /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F4876A2A63A817004868A2 /* FriendsView.swift */; };
+		D4F4876B2A63A818004868A2 /* FriendsPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F4876A2A63A817004868A2 /* FriendsPageView.swift */; };
 		D4F4876D2A64368F004868A2 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F4876C2A64368F004868A2 /* Friend.swift */; };
 		D4F4876F2A64369A004868A2 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F4876E2A64369A004868A2 /* Location.swift */; };
 		D4F487712A64395D004868A2 /* UserLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F487702A64395C004868A2 /* UserLocationViewModel.swift */; };
-		D4F4877B2A645C7E004868A2 /* UserListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F4877A2A645C7E004868A2 /* UserListViewModel.swift */; };
-		D4F4877D2A645C8C004868A2 /* UserListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F4877C2A645C8C004868A2 /* UserListView.swift */; };
+		D4F4877B2A645C7E004868A2 /* FriendsPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F4877A2A645C7E004868A2 /* FriendsPageViewModel.swift */; };
 		D4F4877F2A645CC6004868A2 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F4877E2A645CC6004868A2 /* UserService.swift */; };
 		D4F487812A647287004868A2 /* FriendListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F487802A647286004868A2 /* FriendListViewModel.swift */; };
 		D4F487842A659199004868A2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F487832A659199004868A2 /* ViewController.swift */; };
@@ -61,6 +60,9 @@
 		D4F4878D2A659A24004868A2 /* UserPhotoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F4878C2A659A24004868A2 /* UserPhotoViewModel.swift */; };
 		D4F4878F2A65BCC0004868A2 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F4878E2A65BCC0004868A2 /* Post.swift */; };
 		FB81E1C02A77150C00A4915D /* FriendRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB81E1BF2A77150C00A4915D /* FriendRequest.swift */; };
+
+		FBC9B2052AAC1B4C0058D8A1 /* FriendsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC9B2042AAC1B4C0058D8A1 /* FriendsListView.swift */; };
+
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -96,12 +98,11 @@
 		D4F487642A63A6DF004868A2 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		D4F487662A63A7E9004868A2 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		D4F487682A63A80B004868A2 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
-		D4F4876A2A63A817004868A2 /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
+		D4F4876A2A63A817004868A2 /* FriendsPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsPageView.swift; sourceTree = "<group>"; };
 		D4F4876C2A64368F004868A2 /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
 		D4F4876E2A64369A004868A2 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		D4F487702A64395C004868A2 /* UserLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocationViewModel.swift; sourceTree = "<group>"; };
-		D4F4877A2A645C7E004868A2 /* UserListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListViewModel.swift; sourceTree = "<group>"; };
-		D4F4877C2A645C8C004868A2 /* UserListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListView.swift; sourceTree = "<group>"; };
+		D4F4877A2A645C7E004868A2 /* FriendsPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsPageViewModel.swift; sourceTree = "<group>"; };
 		D4F4877E2A645CC6004868A2 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		D4F487802A647286004868A2 /* FriendListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListViewModel.swift; sourceTree = "<group>"; };
 		D4F487832A659199004868A2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -111,6 +112,9 @@
 		D4F4878C2A659A24004868A2 /* UserPhotoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPhotoViewModel.swift; sourceTree = "<group>"; };
 		D4F4878E2A65BCC0004868A2 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		FB81E1BF2A77150C00A4915D /* FriendRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequest.swift; sourceTree = "<group>"; };
+
+		FBC9B2042AAC1B4C0058D8A1 /* FriendsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListView.swift; sourceTree = "<group>"; };
+
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -215,7 +219,7 @@
 			isa = PBXGroup;
 			children = (
 				D4F487822A659141004868A2 /* CustomCamera */,
-				D4F487792A645C62004868A2 /* FriendsList */,
+				D4F487792A645C62004868A2 /* FriendsPage */,
 				D4F4875B2A63A5F0004868A2 /* Authentication */,
 				D4F4874A2A639BEF004868A2 /* ViewModels */,
 				D4F4874B2A639BFB004868A2 /* Views */,
@@ -273,7 +277,6 @@
 				D436F9242A65D361006C984F /* Feed */,
 				D4F4874C2A639C0B004868A2 /* HomeView.swift */,
 				D4F487662A63A7E9004868A2 /* TabBarView.swift */,
-				D4F4876A2A63A817004868A2 /* FriendsView.swift */,
 				D436F9222A65C806006C984F /* CameraTestView.swift */,
 			);
 			path = Views;
@@ -289,17 +292,18 @@
 			path = Authentication;
 			sourceTree = "<group>";
 		};
-		D4F487792A645C62004868A2 /* FriendsList */ = {
+		D4F487792A645C62004868A2 /* FriendsPage */ = {
 			isa = PBXGroup;
 			children = (
-				D4F4877A2A645C7E004868A2 /* UserListViewModel.swift */,
-				D4F4877C2A645C8C004868A2 /* UserListView.swift */,
+				D4F4876A2A63A817004868A2 /* FriendsPageView.swift */,
+				D4F4877A2A645C7E004868A2 /* FriendsPageViewModel.swift */,
+				FBC9B2042AAC1B4C0058D8A1 /* FriendsListView.swift */,
 				D4F4877E2A645CC6004868A2 /* UserService.swift */,
 				D4F487802A647286004868A2 /* FriendListViewModel.swift */,
 				D436F9362A6883D5006C984F /* CustomAnnotationView.swift */,
 				D436F93C2A71CB58006C984F /* UserCustomAnnotation.swift */,
 			);
-			path = FriendsList;
+			path = FriendsPage;
 			sourceTree = "<group>";
 		};
 		D4F487822A659141004868A2 /* CustomCamera */ = {
@@ -412,10 +416,9 @@
 				D436F94A2A72BFCB006C984F /* ProfileView.swift in Sources */,
 				D4F487672A63A7E9004868A2 /* TabBarView.swift in Sources */,
 				D436F93D2A71CB59006C984F /* UserCustomAnnotation.swift in Sources */,
-				D4F4877D2A645C8C004868A2 /* UserListView.swift in Sources */,
 				D4F4878D2A659A24004868A2 /* UserPhotoViewModel.swift in Sources */,
 				D4F487512A639DDA004868A2 /* LocationManager.swift in Sources */,
-				D4F4877B2A645C7E004868A2 /* UserListViewModel.swift in Sources */,
+				D4F4877B2A645C7E004868A2 /* FriendsPageViewModel.swift in Sources */,
 				D4F487862A6592AB004868A2 /* ViewController+Extras.swift in Sources */,
 				D4F4877F2A645CC6004868A2 /* UserService.swift in Sources */,
 				D4F4876F2A64369A004868A2 /* Location.swift in Sources */,
@@ -436,7 +439,8 @@
 				D436F95D2A7306B9006C984F /* FriendsViewModel.swift in Sources */,
 				D4F487812A647287004868A2 /* FriendListViewModel.swift in Sources */,
 				D436F9472A71EED4006C984F /* CommentButtonView.swift in Sources */,
-				D4F4876B2A63A818004868A2 /* FriendsView.swift in Sources */,
+				D4F4876B2A63A818004868A2 /* FriendsPageView.swift in Sources */,
+				FBC9B2052AAC1B4C0058D8A1 /* FriendsListView.swift in Sources */,
 				D4F487882A65949C004868A2 /* CapturedImageView.swift in Sources */,
 				D4F487652A63A6DF004868A2 /* LoginView.swift in Sources */,
 				D436F9282A65D3A5006C984F /* PostView.swift in Sources */,

@@ -25,48 +25,9 @@ struct FriendDetailSheetView: View {
                     
                 }
                 Divider()
-                List(friendsViewModel.friends, id: \.id) { friend in
-                    VStack(alignment: .leading) {
-                        HStack {
-                            if let url = URL(string: friend.profileImageURL ?? "") {
-                                KFImage(url)
-                                    .resizable()
-                                    .frame(width: 50, height: 50)
-                                    .clipShape(Circle())
-                            } else {
-                                Image(systemName: "person.circle")
-                                    .resizable()
-                                    .frame(width:50, height: 50)
-                            }
-                            Text(friend.fullName)
-                                .font(.headline)
-                            Spacer()
-                            HStack {
-                                Text("\(friend.town ?? "Unknown Town")")
-                                    .fontWeight(.light)
-                                Text("\(friend.state ?? "Unknown State")")
-                                    .fontWeight(.light)
-                            }
-                        }
-                    }
-                    .listRowSeparator(.hidden)
-                }
-                .scrollContentBackground(.hidden)
-                .background(Color.white.edgesIgnoringSafeArea(.all))
-                .listStyle(PlainListStyle())
-
+                FriendsListView(friendsViewModel: friendsViewModel)
             }
+            .padding()
         }
     }
 }
-
-
-
-
-
-
-//struct FriendDetailSheetView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        FriendDetailSheetView()
-//    }
-//}

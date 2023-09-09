@@ -19,25 +19,25 @@ struct TabBarView: View {
                                   startPoint: .topLeading,
                                   endPoint: .bottomTrailing)
     var body: some View {
-        ZStack {
-            TabView (selection: $selectedTab) {
-                ZStack {
-                    
-                    FriendsView()
-                }
-                .tabItem{
-                    Label("Friends", systemImage: "house.fill")
-                }
-                .tag(0)
+        TabView (selection: $selectedTab) {
+            ZStack {
+                FriendsPageView()
+            }
+            .tabItem{
+                Label("Friends", systemImage: "house.fill")
+            }
+            .tag(0)
+            
+            ZStack {
                 
-                ZStack {
-                    
-                    MapWithCameraButtonView(userLocationViewModel: userLocationViewModel, friendsViewModel: friendsViewModel, viewModel: profileViewModel)
-                }
-                .tabItem{
-                    Label("Home",  systemImage:"location.fill")
-                }
-                .tag(1)
+                MapWithCameraButtonView(userLocationViewModel: userLocationViewModel, friendsViewModel: friendsViewModel, viewModel: profileViewModel)
+            }
+            .tabItem{
+                Label("Home",  systemImage:"location.fill")
+            }
+            .tag(1)
+            
+            ZStack {
                 
                 ZStack {
                     
