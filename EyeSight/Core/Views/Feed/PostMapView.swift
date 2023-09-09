@@ -54,14 +54,14 @@ struct PostMapView: View {
                     .frame(width: geometry.size.width)
                     .clipped()
                     .cornerRadius(10)
-                    .padding(.bottom, 16)
+                    .padding(.bottom, 14)
                 } else {
                     VStack {
                         Rectangle()
                             .foregroundColor(.gray)
                             .frame(width: geometry.size.width, height: 200)
                             .cornerRadius(10)
-                            .padding(.bottom, 16)
+                            .padding(.bottom, 14)
                         
                         Text("Loading image...")
                             .foregroundColor(.secondary)
@@ -77,6 +77,7 @@ struct PostMapView: View {
                         Text("View Comments")
                             .foregroundColor(.gray)
                             .font(.subheadline)
+                            .padding(.bottom, 12)
                     }
                     .sheet(isPresented: $commentViewModel.isShowingCommentSection) {
                         CommentSectionView(viewModel: commentViewModel, commentSectionID: commentSectionID)

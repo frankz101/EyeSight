@@ -33,25 +33,44 @@ class ViewController: UIViewController {
     var takePicture = false
     var backCameraOn = true
     
+    
+
+    
     //MARK:- View Components
     let switchCameraButton : UIButton = {
         let button = UIButton()
-        let image = UIImage(named: "switchcamera")?.withRenderingMode(.alwaysTemplate)
-        button.setImage(image, for: .normal)
-        button.backgroundColor = .white
-        button.tintColor = .red
+        if let image = UIImage(systemName: "arrow.triangle.2.circlepath.camera") {
+            button.setImage(image, for: .normal)
+        }
+        button.tintColor = .white
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
+    
+    let captureImageButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .clear  // Transparent background
+        button.layer.borderWidth = 8     // Width of the border
+        button.layer.borderColor = UIColor.white.cgColor // Color of the border
+        button.layer.cornerRadius = 40   // Corner radius should be half of the width and height
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
-    let captureImageButton : UIButton = {
+    let retakeButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .white
+        if let image = UIImage(systemName: "camera.on.rectangle") {
+            button.setImage(image, for: .normal)
+        }
         button.tintColor = .white
-        button.layer.cornerRadius = 25
+        button.isHidden = true // Initially hide the retake button
+        button.addTarget(self, action: #selector(retakeImage), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+
+
     
     let capturedImageView = CapturedImageView()
     
@@ -59,6 +78,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        capturedImageView.isHidden = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -184,9 +204,6 @@ class ViewController: UIViewController {
         
         //acitvate the camera button again
         switchCameraButton.isUserInteractionEnabled = true
-        
-        let image = UIImage(named: backCameraOn ? "switchcamera" : "switchcamera_front")?.withRenderingMode(.alwaysTemplate)
-            switchCameraButton.setImage(image, for: .normal)
     }
     
     
@@ -298,11 +315,22 @@ class ViewController: UIViewController {
     //MARK:- Actions
     @objc func captureImage(_ sender: UIButton?){
         takePicture = true
+        previewLayer.isHidden = true
+        capturedImageView.isHidden = false
+        captureImageButton.isHidden = true
+        switchCameraButton.isHidden = true;
+        retakeButton.isHidden = false;
+        
+        
+
+        
+        
         let submitButton = UIButton(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
         submitButton.center = self.view.center
         submitButton.setTitle("Submit", for: .normal)
         submitButton.backgroundColor = .blue
         submitButton.addTarget(self, action: #selector(submitImage), for: .touchUpInside)
+        submitButton.tag = 999
         self.view.addSubview(submitButton)
     }
     
@@ -315,6 +343,20 @@ class ViewController: UIViewController {
     @objc func switchCamera(_ sender: UIButton?){
         switchCameraInput()
     }
+    
+    @objc func retakeImage() {
+        previewLayer.isHidden = false // Show the video preview
+        capturedImageView.isHidden = true // Hide the captured image view
+        captureImageButton.isHidden = false // Show the "Capture Image" button
+        switchCameraButton.isHidden = false;
+        retakeButton.isHidden = true // Hide the "Retake" button
+        
+        // Remove the submitButton from its superview
+        if let submitButton = self.view.subviews.first(where: { $0 is UIButton && $0.tag == 999 }) {
+            submitButton.removeFromSuperview()
+        }
+    }
+
 
 }
 

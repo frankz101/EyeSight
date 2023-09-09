@@ -19,33 +19,46 @@ struct TabBarView: View {
                                   startPoint: .topLeading,
                                   endPoint: .bottomTrailing)
     var body: some View {
-        TabView (selection: $selectedTab) {
-            ZStack {
+        ZStack {
+            TabView (selection: $selectedTab) {
+                ZStack {
+                    
+                    FriendsView()
+                }
+                .tabItem{
+                    Label("Friends", systemImage: "house.fill")
+                }
+                .tag(0)
                 
-                FriendsView()
-            }
-            .tabItem{
-                Label("Friends", systemImage: "house.fill")
-            }
-            .tag(0)
-            
-            ZStack {
+                ZStack {
+                    
+                    MapWithCameraButtonView(userLocationViewModel: userLocationViewModel, friendsViewModel: friendsViewModel, viewModel: profileViewModel)
+                }
+                .tabItem{
+                    Label("Home",  systemImage:"location.fill")
+                }
+                .tag(1)
                 
-                MapWithCameraButtonView(userLocationViewModel: userLocationViewModel, friendsViewModel: friendsViewModel, viewModel: profileViewModel)
+                ZStack {
+                    
+                    ProfileView(viewModel: profileViewModel)
+                }
+                .tabItem {
+                    Label("Profile", systemImage: "person.crop.circle.fill")
+                }
+                .tag(2)
             }
-            .tabItem{
-                Label("Home",  systemImage:"location.fill")
-            }
-            .tag(1)
-            
-            ZStack {
-                
-                ProfileView(viewModel: profileViewModel)
-            }
-            .tabItem {
-                Label("Profile", systemImage: "person.crop.circle.fill")
-            }
-            .tag(2)
+            .overlay(
+                Rectangle()
+                    .fill(Color.gray.opacity(0.2))
+                    .frame(height: 1)
+                    .offset(y: -49), // This offset may need to be adjusted
+                alignment: .bottom
+            )
+            .accentColor(.black)
+        }
+
+        
             
             
                                 
@@ -91,7 +104,8 @@ struct TabBarView: View {
 //                    .tag(4)
 //            }
 //            .background(Color.clear)
-        }
+
+        
     }
 }
 
