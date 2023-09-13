@@ -16,12 +16,13 @@ struct CameraTestView: View {
             Button(action: {
                 showModal.toggle()
             }) {
-                Text("Open Camera")
-                    .font(.title)
+                Text("post a photo")
+                    .font(.body)
                     .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
+                    .background(Color.black)
+                    .foregroundStyle(.white)
                     .cornerRadius(10)
+                    .buttonStyle(.bordered)
             }
         }
         .fullScreenCover(isPresented: $showModal) {

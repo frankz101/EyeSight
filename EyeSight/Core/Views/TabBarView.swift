@@ -11,8 +11,9 @@ struct TabBarView: View {
     @ObservedObject var userLocationViewModel: UserLocationViewModel
     @EnvironmentObject var userPhotoViewModel: UserPhotoViewModel
     @ObservedObject var profileViewModel: ProfileViewModel
+    @ObservedObject var sharedMapViewModel: SharedMapViewModel
     @ObservedObject var friendsViewModel: FriendsViewModel
-    @State private var selectedTab = 1 // Set the index of MapViewRepresentable tab
+    @State private var selectedTab = 1 
     @State private var isActiveTab: Bool = false
     
     let gradient = LinearGradient(colors: [.orange, .green],
@@ -32,7 +33,7 @@ struct TabBarView: View {
                 
                 ZStack {
                     
-                    MapWithCameraButtonView(userLocationViewModel: userLocationViewModel, friendsViewModel: friendsViewModel, viewModel: profileViewModel)
+                    MapWithCameraButtonView(sharedMapViewModel: sharedMapViewModel, userLocationViewModel: userLocationViewModel, friendsViewModel: friendsViewModel, viewModel: profileViewModel)
                 }
                 .tabItem{
                     Label("map",  systemImage:"location.fill")

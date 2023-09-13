@@ -11,6 +11,8 @@ import Kingfisher
 
 struct FriendsListView: View {
     @ObservedObject var friendsViewModel: FriendsViewModel
+    @ObservedObject var sharedMapViewModel: SharedMapViewModel
+    
     var body: some View {
         if friendsViewModel.friends.count == 0 {
             VStack{
@@ -46,6 +48,10 @@ struct FriendsListView: View {
                     }
                 }
                 .listRowSeparator(.hidden)
+                .onTapGesture {
+                    sharedMapViewModel.friendTapped(name: friend.fullName)
+                }
+
             }
             .padding(.horizontal, -15)
             .scrollContentBackground(.hidden)
@@ -54,3 +60,6 @@ struct FriendsListView: View {
         }
     }
 }
+
+
+

@@ -68,6 +68,27 @@ class FriendsViewModel: ObservableObject {
             }
         }
     }
+    
+    func fetchLocation(by locationId: String, completion: @escaping (Double?, Double?) -> Void) {
+        let locationDocument = Firestore.firestore().collection("locations").document(locationId)
+        
+        locationDocument.getDocument { (document, error) in
+            if let document = document, document.exists {
+                if let locationData = document.data()?["lastLocation"] as? GeoPoint {
+                    let latitude = locationData.latitude
+                    let longitude = locationData.longitude
+                    completion(latitude, longitude)
+                } else {
+                    print("Error decoding location: GeoPoint not found")
+                    completion(nil, nil)
+                }
+            } else {
+                completion(nil, nil)
+            }
+        }
+    }
+
+
 
     // It's a good idea to stop listening when the object is deinitialized
     deinit {

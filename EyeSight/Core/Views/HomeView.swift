@@ -12,16 +12,18 @@ struct HomeView: View {
     @ObservedObject var profileViewModel: ProfileViewModel
     @ObservedObject var userLocationViewModel: UserLocationViewModel
     @ObservedObject var friendsViewModel: FriendsViewModel
+    @ObservedObject var sharedMapViewModel: SharedMapViewModel = SharedMapService.shared.sharedMapViewModel
 
         init() {
             self.userLocationViewModel = UserLocationViewModel(locationManager: LocationManager())
             self.profileViewModel = ProfileViewModel()
             self.friendsViewModel = FriendsViewModel()
+            self.sharedMapViewModel = sharedMapViewModel
         }
     var body: some View {
         Group {
             if viewModel.userSession != nil {
-                TabBarView(userLocationViewModel: userLocationViewModel, profileViewModel: profileViewModel, friendsViewModel: friendsViewModel)
+                TabBarView(userLocationViewModel: userLocationViewModel, profileViewModel: profileViewModel, sharedMapViewModel: sharedMapViewModel, friendsViewModel: friendsViewModel)
             } else {
                 LoginView()
             }

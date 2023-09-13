@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		D4242C6A2AAC356A00FAEC5A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D4242C692AAC356A00FAEC5A /* GoogleService-Info.plist */; };
+		D4242C6C2AAD3EDD00FAEC5A /* SharedMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4242C6B2AAD3EDD00FAEC5A /* SharedMapViewModel.swift */; };
+		D4242C6E2AAD786700FAEC5A /* TestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4242C6D2AAD786700FAEC5A /* TestViewModel.swift */; };
 		D436F91B2A65C66E006C984F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D436F91A2A65C66E006C984F /* FirebaseAuth */; };
 		D436F91D2A65C66E006C984F /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = D436F91C2A65C66E006C984F /* FirebaseFirestore */; };
 		D436F91F2A65C66E006C984F /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D436F91E2A65C66E006C984F /* FirebaseFirestoreSwift */; };
@@ -65,6 +67,8 @@
 
 /* Begin PBXFileReference section */
 		D4242C692AAC356A00FAEC5A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../.Trash/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D4242C6B2AAD3EDD00FAEC5A /* SharedMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedMapViewModel.swift; sourceTree = "<group>"; };
+		D4242C6D2AAD786700FAEC5A /* TestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewModel.swift; sourceTree = "<group>"; };
 		D436F9222A65C806006C984F /* CameraTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraTestView.swift; sourceTree = "<group>"; };
 		D436F9272A65D3A5006C984F /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 		D436F9292A66EA9F006C984F /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
@@ -150,6 +154,8 @@
 				D4F4874E2A639C72004868A2 /* MapViewRepresentable.swift */,
 				D436F9342A67929B006C984F /* MapWithCameraButtonView.swift */,
 				D436F95A2A73008B006C984F /* FriendDetailSheetView.swift */,
+				D4242C6B2AAD3EDD00FAEC5A /* SharedMapViewModel.swift */,
+				D4242C6D2AAD786700FAEC5A /* TestViewModel.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -404,6 +410,7 @@
 				D436F95B2A73008B006C984F /* FriendDetailSheetView.swift in Sources */,
 				D4F4878A2A6595A0004868A2 /* CameraViewRepresentable.swift in Sources */,
 				D4F487692A63A80B004868A2 /* FeedView.swift in Sources */,
+				D4242C6C2AAD3EDD00FAEC5A /* SharedMapViewModel.swift in Sources */,
 				D436F9352A67929B006C984F /* MapWithCameraButtonView.swift in Sources */,
 				D4F487842A659199004868A2 /* ViewController.swift in Sources */,
 				D4F4878F2A65BCC0004868A2 /* Post.swift in Sources */,
@@ -411,6 +418,7 @@
 				D4F487632A63A6AE004868A2 /* SignupView.swift in Sources */,
 				D436F94A2A72BFCB006C984F /* ProfileView.swift in Sources */,
 				D4F487672A63A7E9004868A2 /* TabBarView.swift in Sources */,
+				D4242C6E2AAD786700FAEC5A /* TestViewModel.swift in Sources */,
 				D436F93D2A71CB59006C984F /* UserCustomAnnotation.swift in Sources */,
 				D4F4878D2A659A24004868A2 /* UserPhotoViewModel.swift in Sources */,
 				D4F487512A639DDA004868A2 /* LocationManager.swift in Sources */,

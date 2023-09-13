@@ -7,47 +7,33 @@
 
 import SwiftUI
 
+
+
+
 struct IdentifiablePostId: Identifiable {
     let id: String
     let postId: String
 }
 
-enum ActiveSheet: Identifiable {
-    case first, second(IdentifiablePostId)
-    
-    var id: Int {
-        switch self {
-        case .first:
-            return 0
-        case .second:
-            return 1
-        }
-    }
+enum ActiveSheet {
+    case postMap, friendDetail
 }
 
+
 struct MapWithCameraButtonView: View {
+    @State private var activeSheet: ActiveSheet? = nil
+
     @State private var selectedPostId: IdentifiablePostId? = nil
     @State private var isShowingFirstSheet = false
     @State private var isShowingDetailSheet = false
+    @ObservedObject var sharedMapViewModel: SharedMapViewModel = SharedMapService.shared.sharedMapViewModel
     @ObservedObject var userLocationViewModel: UserLocationViewModel
     @ObservedObject var friendsViewModel: FriendsViewModel
     @ObservedObject var viewModel: ProfileViewModel
-    
+
     var body: some View {
         ZStack {
-            MapViewRepresentable(userLocationViewModel: userLocationViewModel, onAnnotationTapped: { postId in
-                selectedPostId = IdentifiablePostId(id: postId, postId: postId)
-                isShowingFirstSheet = false
-            })
-            .edgesIgnoringSafeArea(.top)
-            .sheet(item: $selectedPostId, onDismiss: {
-                isShowingFirstSheet = true
-                selectedPostId = nil
-            }) { identifiablePostId in
-                PostMapView(postId: identifiablePostId.postId)
-                    .presentationDetents([.medium, .large])
-                    .presentationBackgroundInteraction(.enabled(upThrough: .medium))
-            }
+            MapSubView(userLocationViewModel: userLocationViewModel, selectedPostId: $selectedPostId, isShowingFirstSheet: $isShowingFirstSheet, sharedMapViewModel: sharedMapViewModel)
             VStack {
                 HStack {
                     if isShowingDetailSheet {
@@ -63,7 +49,7 @@ struct MapWithCameraButtonView: View {
                         }
                         Spacer()
                     }
-                    
+
                     if !isShowingDetailSheet {
                         Spacer()
                         Button(action: {
@@ -82,21 +68,21 @@ struct MapWithCameraButtonView: View {
             }
             .sheet(isPresented: $isShowingDetailSheet, onDismiss: {
             }) {
-                FriendDetailSheetView(friendsViewModel: friendsViewModel, viewModel: viewModel)
+                FriendDetailSheetView(friendsViewModel: friendsViewModel, viewModel: viewModel, sharedMapViewModel: sharedMapViewModel)
                     .presentationDetents([.medium,.large])
                     .presentationBackgroundInteraction(.enabled(upThrough: .medium))
             }
             .padding()
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+
+
+
+
+
+
+
+
+
+
             //                                    MapViewRepresentable(userLocationViewModel: userLocationViewModel, onAnnotationTapped: { postId in
             //                                                            print("Annotation tapped: \(postId)")  // Debug print
             //                                        selectedPostId = IdentifiablePostId(id: postId, postId: postId)
@@ -143,11 +129,11 @@ struct MapWithCameraButtonView: View {
             //                                        .presentationDetents([.medium,.large])
             //                                        .presentationBackgroundInteraction(.enabled(upThrough: .medium))
             //                                }
-            
-            
-            
-            
-            
+
+
+
+
+
             //struct MapWithCameraButtonView: View {
             //    @State private var selectedPostId: IdentifiablePostId? = nil
             //    @State private var isShowingFirstSheet = true
@@ -179,12 +165,38 @@ struct MapWithCameraButtonView: View {
             //                    .presentationDetents([.medium, .large])
             //                    .presentationBackgroundInteraction(.enabled(upThrough: .medium))
             //            }
-            
+
         }
     }
-    
-    
-    
+
+    struct MapSubView: View {
+        @ObservedObject var userLocationViewModel: UserLocationViewModel
+        @Binding var selectedPostId: IdentifiablePostId?
+        @Binding var isShowingFirstSheet: Bool
+        @ObservedObject var sharedMapViewModel: SharedMapViewModel
+
+        var body: some View {
+            MapViewRepresentable(onAnnotationTapped: { postId in
+                selectedPostId = IdentifiablePostId(id: postId, postId: postId)
+                isShowingFirstSheet = false
+            })
+//            MapViewRepresentable(userLocationViewModel: userLocationViewModel, sharedMapViewModel: sharedMapViewModel, onAnnotationTapped: { postId in
+//                selectedPostId = IdentifiablePostId(id: postId, postId: postId)
+//                isShowingFirstSheet = false
+//            })
+            .edgesIgnoringSafeArea(.top)
+            .sheet(item: $selectedPostId, onDismiss: {
+                isShowingFirstSheet = true
+                selectedPostId = nil
+            }) { identifiablePostId in
+                PostMapView(postId: identifiablePostId.postId)
+                    .presentationDetents([.medium, .large])
+                    .presentationBackgroundInteraction(.enabled(upThrough: .medium))
+            }
+        }
+
+    }
+
     //struct MapWithCameraButtonView: View {
     //    @State private var showModal = false
     //    @State var isSheetPresented = false
@@ -231,9 +243,9 @@ struct MapWithCameraButtonView: View {
     //        }
     //    }
     //}
-    
-    
-    
+
+
+
     //struct MapWithCameraView_Previews: PreviewProvider {
     //    static var previews: some View {
     //        let userLocationViewModel = UserLocationViewModel()
@@ -243,6 +255,6 @@ struct MapWithCameraButtonView: View {
     //            .environment(\.locationManager, locationManager) // Pass the locationManager as an environment value
     //    }
     //}
-    
-    
+
+
 }

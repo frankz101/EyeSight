@@ -11,6 +11,7 @@ import Kingfisher
 struct FriendDetailSheetView: View {
     @ObservedObject var friendsViewModel: FriendsViewModel
     @ObservedObject var viewModel: ProfileViewModel
+    @ObservedObject var sharedMapViewModel: SharedMapViewModel
     
     var body: some View {
         NavigationStack {
@@ -25,7 +26,7 @@ struct FriendDetailSheetView: View {
                     
                 }
                 Divider()
-                FriendsListView(friendsViewModel: friendsViewModel)
+                FriendsListView(friendsViewModel: friendsViewModel, sharedMapViewModel: sharedMapViewModel)
             }
             .padding()
         }

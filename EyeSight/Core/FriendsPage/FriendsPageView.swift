@@ -21,6 +21,7 @@ struct FriendsPageView: View {
     
     @StateObject var viewModel = FriendsPageViewModel()
     @StateObject var friendsViewModel = FriendsViewModel()
+    @StateObject var sharedMapViewModel = SharedMapViewModel()
 
     var body: some View {
         VStack {
@@ -35,7 +36,7 @@ struct FriendsPageView: View {
             case .search:
                 SearchFriendsView()
             case .friends:
-                FriendsListView(friendsViewModel: friendsViewModel)
+                FriendsListView(friendsViewModel: friendsViewModel, sharedMapViewModel: sharedMapViewModel)
             case .requests:
                 FriendRequestsView()
             }
