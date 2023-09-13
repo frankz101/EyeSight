@@ -60,6 +60,7 @@ struct MapWithCameraButtonView: View {
                         }
                     }
                 }
+                .padding()
 
                 Spacer() // Pushes buttons to the bottom
 
@@ -90,6 +91,14 @@ struct MapWithCameraButtonView: View {
             }
             .padding(.bottom) // Add some bottom padding
         }
+        .sheet(isPresented: $isShowingDetailSheet) { // <-- Add this line
+            FriendDetailSheetView(friendsViewModel: friendsViewModel,
+                                  viewModel: viewModel,
+                                  sharedMapViewModel: sharedMapViewModel)
+            .presentationDetents([.medium,.large])
+            .presentationBackgroundInteraction(.enabled(upThrough: .medium))
+        } // <-- Add this line
+        
     }
     
     struct MapSubView: View {

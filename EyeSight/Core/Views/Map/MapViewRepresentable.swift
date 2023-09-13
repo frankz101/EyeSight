@@ -32,7 +32,7 @@ final class SharedMapService {
 
 
 struct MapViewRepresentable: UIViewRepresentable {
-    let onAnnotationTapped: (String) -> Void  // Changed this to take a String
+    let onAnnotationTapped: (String) -> Void  
     var friendAnnotations: [String: MKPointAnnotation] {
         return SharedMapService.shared.friendListViewModel.friendAnnotations
     }
