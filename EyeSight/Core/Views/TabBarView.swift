@@ -11,7 +11,7 @@ struct TabBarView: View {
     @ObservedObject var userLocationViewModel: UserLocationViewModel
     @EnvironmentObject var userPhotoViewModel: UserPhotoViewModel
     @ObservedObject var profileViewModel: ProfileViewModel
-    @ObservedObject var sharedMapViewModel: SharedMapViewModel
+    @ObservedObject var sharedMapViewModel = SharedMapService.shared.sharedMapViewModel
     @ObservedObject var friendsViewModel: FriendsViewModel
     @State private var selectedTab = 1 
     @State private var isActiveTab: Bool = false
