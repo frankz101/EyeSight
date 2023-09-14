@@ -56,8 +56,8 @@ struct MapViewRepresentable: UIViewRepresentable {
         mapView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: "CustomAnnotationView")
         mapView.register(UserCustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: "UserCustomAnnotationView")
         
-        
-        print("makeuiview")
+//        SharedMapService.shared.friendListViewModel.fetchFriendPosts()
+//        SharedMapService.shared.friendListViewModel.fetchFriendLocations()
 
         return mapView
     }
@@ -66,11 +66,13 @@ struct MapViewRepresentable: UIViewRepresentable {
         // Typecast UIViewType to MKMapView
         guard let mapView = uiView as? MKMapView else { return }
 
-        // Existing code ...
-
         if let friendName = SharedMapService.shared.sharedMapViewModel.selectedFriendName {
             self.zoomToAnnotation(withName: friendName)
+            DispatchQueue.main.async {
+                SharedMapService.shared.sharedMapViewModel.selectedFriendName = nil
+            }
         }
+
 
         mapView.removeAnnotations(mapView.annotations)
 

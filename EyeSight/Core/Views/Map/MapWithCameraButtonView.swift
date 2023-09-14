@@ -68,7 +68,7 @@ struct MapWithCameraButtonView: View {
                     Button(action: {
                         sharedMapViewModel.toggleUserCustomAnnotations()
                     }) {
-                        Text("Toggle User Annotations")
+                        Text("Friend Locations")
                     }
                     .padding()
                     .background(Color.blue)
@@ -80,7 +80,7 @@ struct MapWithCameraButtonView: View {
                     Button(action: {
                         sharedMapViewModel.toggleCustomAnnotations()
                     }) {
-                        Text("Toggle Custom Annotations")
+                        Text("Posts")
                     }
                     .padding()
                     .background(Color.green)

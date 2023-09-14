@@ -99,7 +99,10 @@ class FriendListViewModel: ObservableObject {
     
     
     func addFriendLocationToMap(friendID: String, latitude: Double, longitude: Double, avatarURL: String, userName: String) {
-
+        
+        if !SharedMapService.shared.sharedMapViewModel.showUserCustomAnnotations {
+            return
+        }
         // Remove old annotation if it exists
         if let oldAnnotation = friendAnnotations[friendID] {
             mapView?.removeAnnotation(oldAnnotation)
@@ -193,6 +196,9 @@ class FriendListViewModel: ObservableObject {
     
     func addPostLocationToMap(postID: String, latitude: Double, longitude: Double, imageUrl: String?, postId: String) {
         // Remove old annotation if it exists
+        if !SharedMapService.shared.sharedMapViewModel.showCustomAnnotations {
+            return
+        }
         
         if let oldAnnotation = postAnnotations[postID] {
             mapView?.removeAnnotation(oldAnnotation)

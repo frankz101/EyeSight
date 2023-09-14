@@ -12,25 +12,37 @@ import MapKit
 class SharedMapViewModel: ObservableObject {
     @Published var selectedFriendName: String? = nil
     @Published var showUserCustomAnnotations: Bool = true
-    @Published var showCustomAnnotations: Bool = true
+    @Published var showCustomAnnotations: Bool = false
+    @Published var hasFetchedFriendData: Bool = false
     
     func friendTapped(name: String) {
-        print(name)
         self.selectedFriendName = name
-        print(self.selectedFriendName)
     }
     
-    // Additional methods to toggle annotation visibility if required
+    // Additional methods to toggle annotation visibility
     func toggleUserCustomAnnotations() {
-        print("money")
         self.showUserCustomAnnotations.toggle()
+        self.showCustomAnnotations.toggle()
+        
+        // Fetch data if it hasn't been fetched yet
+        if !hasFetchedFriendData {
+            SharedMapService.shared.friendListViewModel.fetchFriendPosts()
+            hasFetchedFriendData = true
+        }
     }
     
     func toggleCustomAnnotations() {
-        print("love")
         self.showCustomAnnotations.toggle()
+        self.showUserCustomAnnotations.toggle()
+        
+        // Fetch data if it hasn't been fetched yet
+        if !hasFetchedFriendData {
+            SharedMapService.shared.friendListViewModel.fetchFriendPosts()
+            hasFetchedFriendData = true
+        }
     }
 }
+
 
 
 
